@@ -11,6 +11,7 @@
 	"author": "Avish Jha",
 	"license": "MIT",
 	"dependencies": {
+		"dotenv": "^16.4.5",
 		"puppeteer": "^22.12.1"
 	},
 	"devDependencies": {
