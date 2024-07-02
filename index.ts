@@ -19,9 +19,11 @@ vtop.setViewport({
 
 // Navigating to VTop and navigating to the student login page
 await vtop.goto("https://vtop.vit.ac.in/vtop/");
+await vtop.waitForNetworkIdle();
 await vtop.evaluate(`submitForm('stdForm');`);
 
 // Logging in
+await vtop.waitForNetworkIdle();
 await vtop.type("#username", process.env.VTOP_USERNAME!);
 await vtop.type("#password", process.env.VTOP_PASSWORD!);
 await vtop.evaluate(() => {

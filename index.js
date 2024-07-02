@@ -15,8 +15,17 @@ vtop.setViewport({
 });
 // Navigating to VTop and navigating to the student login page
 await vtop.goto("https://vtop.vit.ac.in/vtop/");
+await vtop.waitForNetworkIdle();
 await vtop.evaluate(`submitForm('stdForm');`);
 // Logging in
-// await vtop.type("#stdUsername", process.env.VTOP_USERNAME!);
-// await vtop.type("#stdPassword", process.env.VTOP_PASSWORD!);
-// await vtop.click("#stdSubmit");
+await vtop.waitForNetworkIdle();
+await vtop.type("#username", process.env.VTOP_USERNAME);
+await vtop.type("#password", process.env.VTOP_PASSWORD);
+await vtop.evaluate(() => {
+    alert("Please solve the captcha and submit the login form. The script will continue once the login request is detected.");
+});
+await new Promise((resolve) => vtop.on("requestfinished", (request) => {
+    if (/\/login/.test(request.url()))
+        resolve();
+}));
+await vtop.waitForNetworkIdle();
