@@ -35,3 +35,10 @@ await new Promise<void>((resolve) =>
 	})
 );
 await vtop.waitForNetworkIdle();
+
+// Navigate to the assignments page
+await vtop.click('button[data-bs-target="#expandedSideBar"');
+await vtop.click("i.fa-graduation-cap");
+await vtop.click('a[data-url="examinations/StudentDA"]');
+await vtop.waitForNetworkIdle();
+await vtop.click('h5[id="expandedSideBarLabel"] + button[aria-label="Close"]');
