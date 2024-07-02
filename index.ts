@@ -1,4 +1,8 @@
 import puppeteer from "puppeteer";
+import dotenv from "dotenv";
+
+// Loading the environment variables
+dotenv.config();
 
 // Launching the browser
 const browser = await puppeteer.launch({
@@ -13,6 +17,19 @@ vtop.setViewport({
 	height: await vtop.evaluate(() => window.screen.height)
 });
 
-// Navigating to the page and performing login
+// Navigating to VTop and navigating to the student login page
 await vtop.goto("https://vtop.vit.ac.in/vtop/");
 await vtop.evaluate(`submitForm('stdForm');`);
+
+// Logging in
+await vtop.type("#username", process.env.VTOP_USERNAME!);
+await vtop.type("#password", process.env.VTOP_PASSWORD!);
+await vtop.evaluate(() => {
+	alert("Please solve the captcha and submit the login form. The script will continue once the login request is detected.");
+});
+await new Promise<void>((resolve) =>
+	vtop.on("requestfinished", (request) => {
+		if (/\/login/.test(request.url())) resolve();
+	})
+);
+await vtop.waitForNetworkIdle();
