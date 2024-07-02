@@ -1,14 +1,18 @@
 {
-  "name": "vtopbulkdownloader",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Avish Jha",
-  "license": "MIT",
-  "dependencies": {
-    "puppeteer": "^22.12.1"
-  }
+	"name": "vtopbulkdownloader",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "tsc && node index.js"
+	},
+	"author": "Avish Jha",
+	"license": "MIT",
+	"dependencies": {
+		"puppeteer": "^22.12.1"
+	},
+	"devDependencies": {
+		"typescript": "^5.5.3"
+	}
 }
