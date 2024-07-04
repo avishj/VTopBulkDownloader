@@ -26,8 +26,7 @@ export default {
 						courseCode: tds[2].innerText.trim(),
 						courseTitle: tds[3].innerText.trim(),
 						courseType: tds[4].innerText.trim(),
-						facultyName: tds[5].innerText.trim(),
-						link: tds[6].onclick?.toString()
+						facultyName: tds[5].innerText.trim()
 					});
 				});
 				return assignments;
