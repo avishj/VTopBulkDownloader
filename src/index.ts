@@ -11,8 +11,16 @@ async function main() {
 	await setup.login(vtop, process.env.VTOP_USERNAME!, process.env.VTOP_PASSWORD!);
 	await setup.navigateToAssignmentsPage(vtop);
 
-	const semesters = await da.semester.extractAll(vtop);
+	const semesters = await da.semester.extractAllSemesters(vtop);
 	console.log(semesters);
+
+	await da.semester.selectSemester(vtop, semesters[0]);
+
+	if (await da.semester.hasAssignments(vtop)) {
+		console.log("has assignments");
+		const assignments = await da.semester.extractAllAssignments(vtop);
+		console.log(assignments);
+	}
 }
 
 await main();
