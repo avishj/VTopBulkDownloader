@@ -19,7 +19,7 @@ export default {
 		async extractAllAssignments(vtop: Page) {
 			return await vtop.evaluate(() => {
 				const assignments = new Map();
-				return document.querySelectorAll("#fixedTableContainer tr.tableContent").forEach((row) => {
+				document.querySelectorAll("#fixedTableContainer tr.tableContent").forEach((row) => {
 					const tds = row.querySelectorAll("td");
 					assignments.set(tds[0].innerText.trim(), {
 						classNumber: tds[1].innerText.trim(),
@@ -30,6 +30,7 @@ export default {
 						link: tds[6].onclick?.toString()
 					});
 				});
+				return assignments;
 			});
 		}
 	}
