@@ -14,7 +14,7 @@ async function main() {
 	const semesters = await da.semester.extractAllSemesters(vtop);
 	console.log(semesters);
 
-	await da.semester.selectSemester(vtop, semesters[0]);
+	await da.semester.selectSemester(vtop, semesters[3]);
 
 	if (await da.semester.hasAssignments(vtop)) {
 		console.log("has assignments");
