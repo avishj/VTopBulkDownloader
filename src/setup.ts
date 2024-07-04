@@ -51,7 +51,5 @@ export default {
 		await utils.pause(1000);
 		await vtop.click('a[data-url="examinations/StudentDA"]');
 		await vtop.waitForNetworkIdle();
-		await vtop.waitForSelector('h5[id="expandedSideBarLabel"] + button[aria-label="Close"]');
-		await vtop.click('h5[id="expandedSideBarLabel"] + button[aria-label="Close"]');
 	}
 };
