@@ -1,4 +1,5 @@
 import puppeteer, { Page } from "puppeteer";
+import utils from "./utils.js";
 
 export default {
 	async init() {
@@ -47,6 +48,7 @@ export default {
 		await vtop.waitForSelector("i.fa-graduation-cap");
 		await vtop.click("i.fa-graduation-cap");
 		await vtop.waitForSelector('a[data-url="examinations/StudentDA"]');
+		await utils.pause(1000);
 		await vtop.click('a[data-url="examinations/StudentDA"]');
 		await vtop.waitForNetworkIdle();
 		await vtop.waitForSelector('h5[id="expandedSideBarLabel"] + button[aria-label="Close"]');
