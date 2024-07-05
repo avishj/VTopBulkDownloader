@@ -63,11 +63,10 @@ export default {
 				logger(`${semesters[i].name} has courses!`);
 				await utils.sleep(1000);
 				semesters[i].courses = await extractCourses(vtop);
-				console.log(semesters[i].courses);
-				semesters[i].courses.forEach(async (c) => {
-					c = await course.main(vtop, semesters[i], c);
-					console.log(c);
-				});
+				for (let j = 0; j < semesters[i].courses.length; j++) {
+					semesters[i].courses[j] = await course.main(vtop, semesters[i], semesters[i].courses[j]);
+				}
+				console.log(semesters[i]);
 			} else {
 				logger(`${semesters[i].name} has no courses!`);
 			}
