@@ -56,23 +56,23 @@ export default {
 	async main(vtop: Page) {
 		logger("Starting!");
 		const semesters = await extractSemesters(vtop);
-		semesters.forEach(async (semester) => {
-			await selectSemester(vtop, semester);
+		for (let i = 0; i < semesters.length; i++) {
+			await selectSemester(vtop, semesters[i]);
 			await vtop.waitForNetworkIdle();
 			if (await hasCourses(vtop)) {
-				logger(`${semester.name} has courses!`);
+				logger(`${semesters[i].name} has courses!`);
 				await utils.sleep(1000);
-				semester.courses = await extractCourses(vtop);
-				console.log(semester.courses);
-				semester.courses.forEach(async (c) => {
-					c = await course.main(vtop, semester, c);
+				semesters[i].courses = await extractCourses(vtop);
+				console.log(semesters[i].courses);
+				semesters[i].courses.forEach(async (c) => {
+					c = await course.main(vtop, semesters[i], c);
 					console.log(c);
 				});
 			} else {
-				logger(`${semester.name} has no courses!`);
+				logger(`${semesters[i].name} has no courses!`);
 			}
 			await utils.sleep(1000);
-		});
+		}
 		logger("Done!");
 	}
 };
