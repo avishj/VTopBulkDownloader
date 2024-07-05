@@ -16,18 +16,20 @@ async function extractAssignments(vtop: Page, course: Course): Promise<Assignmen
 	await vtop.waitForNetworkIdle();
 	return await vtop.evaluate(() => {
 		const assignments: Assignment[] = [];
-		document.querySelectorAll("#fixedTableContainer:nth-of-type(2) tr.tableContent").forEach((row) => {
-			const tds = row.querySelectorAll("td");
-			assignments.push({
-				title: tds[1].innerText.trim(),
-				maxMark: Number(tds[2].innerText.trim()),
-				weightage: Number(tds[3].innerText.trim()),
-				questionPaper: tds[5]?.querySelector("a")?.href,
-				dueDate: tds[4]?.querySelector("span")?.innerText.trim(),
-				lastUpdatedOn: tds[6]?.querySelector("span")?.innerText.trim(),
-				solutionPaper: tds[7]?.querySelector("a")?.href
+		Array.from(document.querySelectorAll(".fixedTableContainer tr.tableContent"))
+			.slice(1)
+			.forEach((row) => {
+				const tds = row.querySelectorAll("td");
+				assignments.push({
+					title: tds[1].innerText.trim(),
+					maxMark: Number(tds[2].innerText.trim()),
+					weightage: Number(tds[3].innerText.trim()),
+					questionPaper: tds[5]?.querySelector("a")?.href,
+					dueDate: tds[4]?.querySelector("span")?.innerText.trim(),
+					lastUpdatedOn: tds[6]?.querySelector("span")?.innerText.trim(),
+					solutionPaper: tds[7]?.querySelector("a")?.href
+				});
 			});
-		});
 		return assignments;
 	});
 }
