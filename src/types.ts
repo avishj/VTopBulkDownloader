@@ -11,3 +11,13 @@ export type Course = {
 	courseType: string;
 	facultyName: string;
 };
+
+export type Assignment = {
+	title: string;
+	maxMark: number;
+	weightage: number;
+	dueDate: string;
+	questionPaper?: string;
+	lastUpdatedOn?: string;
+	solutionPaper?: string;
+};
