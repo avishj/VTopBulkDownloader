@@ -50,8 +50,8 @@ async function login(vtop: Page, username: string, password: string) {
 }
 
 async function navigateToDAPage(vtop: Page) {
-	// await vtop.waitForSelector('button[data-bs-target="#expandedSideBar"');
-	// await vtop.click('button[data-bs-target="#expandedSideBar"');
+	await vtop.waitForSelector('button[data-bs-target="#expandedSideBar"');
+	await vtop.click('button[data-bs-target="#expandedSideBar"');
 	logger("Navigating to the DA page!");
 	await vtop.waitForSelector("i.fa-graduation-cap");
 	await vtop.click("i.fa-graduation-cap");
