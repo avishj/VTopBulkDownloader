@@ -2,7 +2,7 @@ import puppeteer, { Page } from "puppeteer";
 import utils from "./utils.js";
 import { Context } from "./enums.js";
 
-let logger: Function;
+const logger = utils.log.bind(null, Context.Setup);
 
 async function init() {
 	logger("Launching the browser!");
@@ -63,7 +63,6 @@ async function navigateToDAPage(vtop: Page) {
 
 export default {
 	async main() {
-		logger = utils.log.bind(null, Context.Setup);
 		logger("Starting!");
 		const vtop = await init();
 		await navigateToLoginPage(vtop);
