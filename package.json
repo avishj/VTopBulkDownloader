@@ -12,9 +12,11 @@
 	"license": "MIT",
 	"dependencies": {
 		"dotenv": "^16.4.5",
+		"fs-extra": "^11.2.0",
 		"puppeteer": "^22.12.1"
 	},
 	"devDependencies": {
+		"@types/fs-extra": "^11.0.4",
 		"typescript": "^5.5.3"
 	}
 }
