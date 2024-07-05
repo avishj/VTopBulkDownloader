@@ -27,7 +27,7 @@ async function extractAssignments(vtop: Page, course: Course): Promise<Assignmen
 					questionPaper: tds[5]?.querySelector("a")?.href,
 					dueDate: tds[4]?.querySelector("span")?.innerText.trim(),
 					lastUpdatedOn: tds[6]?.querySelector("span")?.innerText.trim(),
-					solutionPaper: tds[7]?.querySelector("a")?.href
+					solutionPaper: tds[8]?.querySelector("a")?.href
 				});
 			});
 		return assignments;
