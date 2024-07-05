@@ -16,7 +16,7 @@ async function extractAssignments(vtop: Page, course: Course): Promise<Assignmen
 	await vtop.waitForNetworkIdle();
 	return await vtop.evaluate(() => {
 		const assignments: Assignment[] = [];
-		document.querySelectorAll("#fixedTableContainer tr.tableContent").forEach((row) => {
+		document.querySelectorAll("#fixedTableContainer:nth-of-type(2) tr.tableContent").forEach((row) => {
 			const tds = row.querySelectorAll("td");
 			assignments.push({
 				title: tds[1].innerText.trim(),
