@@ -1,5 +1,5 @@
 export default {
-	async pause(ms: number) {
+	async sleep(ms: number) {
 		return new Promise((resolve) => setTimeout(resolve, ms));
 	}
 };
