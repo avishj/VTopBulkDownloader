@@ -64,6 +64,7 @@ export default {
 		logger("Starting!");
 		const semesters = await extractSemesters(vtop);
 		for (let i = 0; i < semesters.length; i++) {
+			await vtop.waitForNetworkIdle();
 			await selectSemester(vtop, semesters[i]);
 			await vtop.waitForNetworkIdle();
 			if (await hasCourses(vtop, semesters[i])) {
