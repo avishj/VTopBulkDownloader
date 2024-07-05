@@ -1,5 +1,6 @@
 export enum Context {
 	Setup = "Setup",
 	Semester = "Semester",
-	Course = "Course"
+	Course = "Course",
+	Directory = "Directory"
 }
