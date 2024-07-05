@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import setup from "./setup.js";
-import semester from "./da/semester.js";
+import semester from "./semester.js";
 
 // Loading the environment variables
 dotenv.config();

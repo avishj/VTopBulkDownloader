@@ -1,5 +1,5 @@
 import { Page } from "puppeteer";
-import utils from "../utils.js";
+import utils from "./utils.js";
 
 async function extractAllSemesters(vtop: Page) {
 	return await vtop.evaluate(() => {
@@ -16,29 +16,26 @@ async function hasAssignments(vtop: Page) {
 	});
 }
 async function extractAllAssignments(vtop: Page) {
-	const e = await vtop.evaluate(() => {
-		const assignments = new Map();
+	return await vtop.evaluate(() => {
+		const assignments = {} as { [key: string]: any };
 		document.querySelectorAll("#fixedTableContainer tr.tableContent").forEach((row) => {
 			const tds = row.querySelectorAll("td");
-			assignments.set(tds[0].innerText.trim(), {
+			const key = tds[0].innerText.trim();
+			assignments[key] = {
 				classNumber: tds[1].innerText.trim(),
 				courseCode: tds[2].innerText.trim(),
 				courseTitle: tds[3].innerText.trim(),
 				courseType: tds[4].innerText.trim(),
 				facultyName: tds[5].innerText.trim()
-			});
+			};
 		});
-		console.log(assignments);
 		return assignments;
 	});
-	console.log(e);
-	return e;
 }
 
 export default {
 	async main(vtop: Page) {
 		const semesters = await extractAllSemesters(vtop);
-		console.log(semesters);
 
 		for (const semester of semesters) {
 			await selectSemester(vtop, semester);
@@ -51,7 +48,7 @@ export default {
 			} else {
 				console.log(semester + " has no assignments");
 			}
-			await utils.sleep(3000);
+			await utils.sleep(1000);
 		}
 	}
 };
