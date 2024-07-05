@@ -2,6 +2,7 @@ import { Page } from "puppeteer";
 import utils from "./utils.js";
 import { Course, Semester } from "./types.js";
 import { Context } from "./enums.js";
+import course from "./course.js";
 
 const logger = utils.log.bind(null, Context.Semester);
 
@@ -62,6 +63,11 @@ export default {
 				logger(`${semester.name} has courses!`);
 				await utils.sleep(1000);
 				semester.courses = await extractCourses(vtop);
+				console.log(semester.courses);
+				semester.courses.forEach(async (c) => {
+					c = await course.main(vtop, semester, c);
+					console.log(c);
+				});
 			} else {
 				logger(`${semester.name} has no courses!`);
 			}
