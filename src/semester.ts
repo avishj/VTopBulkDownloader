@@ -1,30 +1,39 @@
 import { Page } from "puppeteer";
 import utils from "./utils.js";
 import { Course, Semester } from "./types.js";
+import { Context } from "./enums.js";
+
+const logger = utils.log.bind(null, Context.Semester);
 
 async function extractSemesters(vtop: Page): Promise<Semester[]> {
+	logger("Extracting semesters!");
 	return await vtop.evaluate(() => {
 		const elements: HTMLOptionElement[] = Array.from(document.querySelectorAll('select[id="semesterSubId"] option[value*="VL"]'));
 		return elements.map((e) => {
 			return {
 				name: e.innerText,
-				hasAssignments: null,
 				value: e.value,
 				courses: []
 			};
 		});
 	});
 }
+
 async function selectSemester(vtop: Page, semester: Semester): Promise<void> {
+	logger(`Selecting semester ${semester.name}!`);
 	await vtop.select('select[id="semesterSubId"]', semester.value);
 	await vtop.waitForNetworkIdle();
 }
+
 async function hasCourses(vtop: Page): Promise<boolean> {
+	logger("Checking if the semester has courses!");
 	return await vtop.evaluate(() => {
 		return document.querySelectorAll("#fixedTableContainer").length > 0;
 	});
 }
+
 async function extractCourses(vtop: Page): Promise<Course[]> {
+	logger("Extracting courses!");
 	return await vtop.evaluate(() => {
 		const assignments: Course[] = [];
 		document.querySelectorAll("#fixedTableContainer tr.tableContent").forEach((row) => {
@@ -43,19 +52,20 @@ async function extractCourses(vtop: Page): Promise<Course[]> {
 
 export default {
 	async main(vtop: Page) {
+		logger("Starting!");
 		const semesters = await extractSemesters(vtop);
-		for (const semester of semesters) {
+		semesters.forEach(async (semester) => {
 			await selectSemester(vtop, semester);
+			await vtop.waitForNetworkIdle();
 			if (await hasCourses(vtop)) {
-				console.log(semester + " has assignments");
-				await vtop.waitForNetworkIdle();
+				logger(`${semester.name} has courses!`);
 				await utils.sleep(1000);
-				const assignments = await extractCourses(vtop);
-				console.log(assignments);
+				semester.courses = await extractCourses(vtop);
 			} else {
-				console.log(semester + " has no assignments");
+				logger(`${semester.name} has no courses!`);
 			}
 			await utils.sleep(1000);
-		}
+		});
+		logger("Done!");
 	}
 };
