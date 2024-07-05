@@ -8,7 +8,7 @@ const logger = utils.log.bind(null, Context.Course);
 async function navigateTo(vtop: Page, course: Course): Promise<void> {
 	logger(`Navigating to ${course.courseCode} - ${course.courseTitle}!`);
 	await vtop.waitForNetworkIdle();
-	await vtop.evaluate(`myFunction(${course.classNumber});`);
+	await vtop.evaluate(`myFunction('${course.classNumber}');`);
 }
 
 async function extractAssignments(vtop: Page, course: Course): Promise<Assignment[]> {
@@ -35,7 +35,7 @@ async function extractAssignments(vtop: Page, course: Course): Promise<Assignmen
 async function goBack(vtop: Page, semester: Semester): Promise<void> {
 	logger(`Going back to ${semester.name}!`);
 	await vtop.waitForNetworkIdle();
-	await vtop.evaluate(`reload(${semester.value});`);
+	await vtop.evaluate(`reload('${semester.value}');`);
 }
 
 export default {
