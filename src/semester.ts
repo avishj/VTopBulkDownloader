@@ -39,7 +39,7 @@ async function hasCourses(vtop: Page, semester: Semester): Promise<boolean> {
 }
 
 async function extractCourses(vtop: Page, semester: Semester): Promise<Course[]> {
-	logger(`${semester.name}s' courses are being extracted!`);
+	logger(`${semester.name}'s courses are being extracted!`);
 	const courses = await vtop.evaluate(() => {
 		const courses: Course[] = [];
 		document.querySelectorAll("#fixedTableContainer tr.tableContent").forEach((row) => {
