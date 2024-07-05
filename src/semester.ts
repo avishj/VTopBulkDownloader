@@ -43,7 +43,8 @@ async function extractCourses(vtop: Page): Promise<Course[]> {
 				courseCode: tds[2].innerText.trim(),
 				courseTitle: tds[3].innerText.trim(),
 				courseType: tds[4].innerText.trim(),
-				facultyName: tds[5].innerText.trim()
+				facultyName: tds[5].innerText.trim(),
+				assignments: []
 			});
 		});
 		return assignments;
