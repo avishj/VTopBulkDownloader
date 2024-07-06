@@ -34,5 +34,9 @@ export default {
 	},
 	async getBasePath() {
 		return basePath;
+	},
+	async writeFile(path: string, name: string, content: string) {
+		await fs.writeFile(nodePath.join(path, name), content);
+		logger(`Wrote file: ${nodePath.join(path, name)}!`);
 	}
 };
