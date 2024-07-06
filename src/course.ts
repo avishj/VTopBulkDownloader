@@ -21,6 +21,7 @@ async function extractAssignments(vtop: Page, course: Course): Promise<Assignmen
 			.forEach((row) => {
 				const tds = row.querySelectorAll("td");
 				assignments.push({
+					serialNumber: Number(tds[0].innerText.trim()),
 					title: tds[1].innerText.trim(),
 					maxMark: Number(tds[2].innerText.trim()),
 					weightage: Number(tds[3].innerText.trim()),

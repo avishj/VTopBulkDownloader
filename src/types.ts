@@ -5,6 +5,7 @@ export type Semester = {
 };
 
 export type Course = {
+	serialNumber: number;
 	classNumber: string;
 	courseCode: string;
 	courseTitle: string;
@@ -14,6 +15,7 @@ export type Course = {
 };
 
 export type Assignment = {
+	serialNumber: number;
 	title: string;
 	maxMark: number;
 	weightage: number;

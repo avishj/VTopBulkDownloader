@@ -46,6 +46,7 @@ async function extractCourses(vtop: Page, semester: Semester): Promise<Course[]>
 		document.querySelectorAll("#fixedTableContainer tr.tableContent").forEach((row) => {
 			const tds = row.querySelectorAll("td");
 			courses.push({
+				serialNumber: Number(tds[0].innerText.trim()),
 				classNumber: tds[1].innerText.trim(),
 				courseCode: tds[2].innerText.trim(),
 				courseTitle: tds[3].innerText.trim(),
