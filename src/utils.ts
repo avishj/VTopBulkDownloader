@@ -5,6 +5,6 @@ export default {
 		return new Promise((resolve) => setTimeout(resolve, ms));
 	},
 	async log(context: Context, message: string) {
-		console.log(`[${new Date().toLocaleString()}] - [${context}] - ${message}`);
+		console.log(`[${new Date().toISOString()}] - [${context}] - ${message}`);
 	}
 };
