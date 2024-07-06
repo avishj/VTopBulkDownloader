@@ -1,3 +1,7 @@
+export type Output = {
+	semesters: Semester[];
+};
+
 export type Semester = {
 	name: string;
 	value: string;
