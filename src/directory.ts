@@ -1,6 +1,6 @@
 import { Context } from "./enums.js";
 import utils from "./utils.js";
-import fs, { appendFile } from "fs-extra";
+import fs from "fs-extra";
 import nodePath from "node:path";
 
 const logger = utils.log.logger.bind(null, Context.Directory);
