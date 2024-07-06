@@ -85,6 +85,7 @@ export default {
 			}
 			await utils.sleep(1000);
 		}
+		await directory.writeFile(await directory.getBasePath(), "semesters.json", JSON.stringify(semesters, null, 4));
 		logger("Done!");
 	}
 };
