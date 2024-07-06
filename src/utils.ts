@@ -1,10 +1,8 @@
-import directory from "./directory.js";
 import { Context } from "./enums";
 import fs from "fs-extra";
 import nodePath from "node:path";
 
-let basePath: string;
-let logFile: string;
+let logPath: string;
 
 export default {
 	async sleep(ms: number) {
@@ -13,13 +11,12 @@ export default {
 	log: {
 		async logger(context: Context, message: string) {
 			console.log(`[${new Date().toISOString()}] - [${context}] - ${message}`);
-			if (logFile) {
-				await fs.appendFile(nodePath.join(basePath, logFile), `[${new Date().toISOString()}] - [${context}] - ${message}\n`); // Not added in directory as causes circular dependency.
+			if (logPath) {
+				await fs.appendFile(logPath, `[${new Date().toISOString()}] - [${context}] - ${message}\n`); // Not added in directory as causes circular dependency.
 			}
 		},
-		async init(path: string) {
-			basePath = path;
-			logFile = new Date().toISOString().replace(/:/g, "-") + ".log";
+		async init() {
+			logPath = nodePath.join(process.cwd(), "output", new Date().toISOString().replace(/:/g, "-") + ".log"); // Not using directory as causes circular dependency.
 		}
 	}
 };

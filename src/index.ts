@@ -8,8 +8,8 @@ import utils from "./utils.js";
 dotenv.config();
 
 async function main() {
+	await utils.log.init();
 	await directory.init();
-	await utils.log.init(await directory.getBasePath());
 	const vtop = await setup.main();
 	await semester.main(vtop);
 }
