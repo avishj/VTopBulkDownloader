@@ -1,5 +1,7 @@
 import directory from "./directory.js";
 import { Context } from "./enums";
+import fs from "fs-extra";
+import nodePath from "node:path";
 
 let basePath: string;
 let logFile: string;
@@ -12,7 +14,7 @@ export default {
 		async logger(context: Context, message: string) {
 			console.log(`[${new Date().toISOString()}] - [${context}] - ${message}`);
 			if (logFile) {
-				await directory.appendFile(basePath, logFile, `[${new Date().toISOString()}] - [${context}] - ${message}\n`);
+				await fs.appendFile(nodePath.join(basePath, logFile), `[${new Date().toISOString()}] - [${context}] - ${message}\n`); // Not added in directory as causes circular dependency.
 			}
 		},
 		async init(path: string) {

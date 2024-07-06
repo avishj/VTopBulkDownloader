@@ -38,8 +38,5 @@ export default {
 	async writeFile(path: string, name: string, content: string) {
 		await fs.writeFile(nodePath.join(path, name), content);
 		logger(`Wrote file: ${nodePath.join(path, name)}!`);
-	},
-	async appendFile(path: string, name: string, content: string) {
-		await fs.appendFile(nodePath.join(path, name), content);
 	}
 };
