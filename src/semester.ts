@@ -3,6 +3,7 @@ import utils from "./utils.js";
 import { Course, Semester } from "./types.js";
 import { Context } from "./enums.js";
 import course from "./course.js";
+import directory from "./directory.js";
 
 const logger = utils.log.bind(null, Context.Semester);
 
@@ -63,6 +64,11 @@ export default {
 	async main(vtop: Page) {
 		logger("Starting!");
 		const semesters = await extractSemesters(vtop);
+		logger(`Creating folders for semesters: ${semesters.map((s) => s.name).join(", ")}`);
+		await directory.createFoldersAt(
+			await directory.getBasePath(),
+			semesters.map((s) => s.name)
+		);
 		for (let i = 0; i < semesters.length; i++) {
 			await vtop.waitForNetworkIdle();
 			await selectSemester(vtop, semesters[i]);
