@@ -3,7 +3,7 @@ import { Assignment, Course, Semester } from "./types.js";
 import utils from "./utils.js";
 import { Context } from "./enums.js";
 
-const logger = utils.log.bind(null, Context.Course);
+const logger = utils.log.logger.bind(null, Context.Course);
 
 async function navigateTo(vtop: Page, course: Course): Promise<void> {
 	logger(`Navigating to ${course.courseCode} - ${course.courseTitle}!`);

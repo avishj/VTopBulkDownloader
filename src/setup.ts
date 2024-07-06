@@ -2,7 +2,7 @@ import puppeteer, { Page } from "puppeteer";
 import utils from "./utils.js";
 import { Context } from "./enums.js";
 
-const logger = utils.log.bind(null, Context.Setup);
+const logger = utils.log.logger.bind(null, Context.Setup);
 
 async function init() {
 	logger("Launching the browser!");

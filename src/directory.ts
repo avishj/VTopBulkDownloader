@@ -1,9 +1,9 @@
 import { Context } from "./enums.js";
 import utils from "./utils.js";
-import fs from "fs-extra";
+import fs, { appendFile } from "fs-extra";
 import nodePath from "node:path";
 
-const logger = utils.log.bind(null, Context.Directory);
+const logger = utils.log.logger.bind(null, Context.Directory);
 let basePath: string;
 
 export default {
@@ -38,5 +38,8 @@ export default {
 	async writeFile(path: string, name: string, content: string) {
 		await fs.writeFile(nodePath.join(path, name), content);
 		logger(`Wrote file: ${nodePath.join(path, name)}!`);
+	},
+	async appendFile(path: string, name: string, content: string) {
+		await fs.appendFile(nodePath.join(path, name), content);
 	}
 };

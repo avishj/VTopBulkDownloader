@@ -5,7 +5,7 @@ import { Context } from "./enums.js";
 import course from "./course.js";
 import directory from "./directory.js";
 
-const logger = utils.log.bind(null, Context.Semester);
+const logger = utils.log.logger.bind(null, Context.Semester);
 
 async function extractSemesters(vtop: Page): Promise<Semester[]> {
 	logger("Extracting semesters!");
