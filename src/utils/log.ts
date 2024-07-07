@@ -9,8 +9,9 @@ export default {
 		if (!logPath) {
 			throw new Error("Log path not initialized!");
 		}
-		console.log(`[${new Date().toISOString()}] - [${context}] - ${message}`);
-		await fs.appendFile(logPath, `[${new Date().toISOString()}] - [${context}] - ${message}\n`); // Not added in directory as causes circular dependency.
+		const formattedLog = `[${new Date().toISOString()}] - [${context}] - ${message}`;
+		console.log(formattedLog);
+		await fs.appendFile(logPath, formattedLog + "\n"); // Not using directory as causes circular dependency.
 	},
 	async init(timestamp: string) {
 		logPath = path.join(process.cwd(), "output", timestamp.replace(/:/g, "-") + ".log"); // Not using directory as causes circular dependency.
