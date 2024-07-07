@@ -1,8 +1,9 @@
 import puppeteer, { Page } from "puppeteer";
-import utils from "./utils.js";
-import { Context } from "./enums.js";
+import { Context } from "./utils/enums.js";
+import log from "./utils/log.js";
+import helpers from "./utils/helpers.js";
 
-const logger = utils.log.logger.bind(null, Context.Setup);
+const logger = log.logger.bind(null, Context.Setup);
 
 async function init() {
 	logger("Launching the browser!");
@@ -33,10 +34,10 @@ async function login(vtop: Page, username: string, password: string) {
 	await vtop.waitForNetworkIdle();
 	await vtop.waitForSelector("#username");
 	await vtop.type("#username", username);
-	await utils.sleep(500);
+	await helpers.sleep(500);
 	await vtop.waitForSelector("#password");
 	await vtop.type("#password", password);
-	await utils.sleep(500);
+	await helpers.sleep(500);
 	await vtop.evaluate(() => {
 		alert("Please solve the captcha and submit the login form. The script will continue once the login request is detected.");
 	});
@@ -56,7 +57,7 @@ async function navigateToDAPage(vtop: Page) {
 	await vtop.waitForSelector("i.fa-graduation-cap");
 	await vtop.click("i.fa-graduation-cap");
 	await vtop.waitForSelector('a[data-url="examinations/StudentDA"]');
-	await utils.sleep(1000);
+	await helpers.sleep(1000);
 	await vtop.click('a[data-url="examinations/StudentDA"]');
 	await vtop.waitForNetworkIdle();
 }
