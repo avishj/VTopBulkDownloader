@@ -1,92 +1,58 @@
 import { Page } from "puppeteer";
-import utils from "./utils.js";
-import { Course, Semester } from "./types.js";
-import { Context } from "./enums.js";
+import { Course, Semester } from "./utils/types.js";
+import { Context } from "./utils/enums.js";
 import course from "./course.js";
-import directory from "./directory.js";
+import log from "./utils/log.js";
+import { semester as directory } from "./directory.js";
 
-const logger = utils.log.logger.bind(null, Context.Semester);
+const logger = log.logger.bind(null, Context.Semester);
 
-async function extractSemesters(vtop: Page): Promise<Semester[]> {
-	logger("Extracting semesters!");
-	const semesters = await vtop.evaluate(() => {
-		const elements: HTMLOptionElement[] = Array.from(document.querySelectorAll('select[id="semesterSubId"] option[value*="VL"]'));
-		return elements.map((e) => {
-			return {
-				name: e.innerText,
-				value: e.value,
-				courses: []
-			};
-		});
-	});
-	logger(`Found ${semesters.length} semesters!`);
-	return semesters;
-}
-
-async function selectSemester(vtop: Page, semester: Semester): Promise<void> {
-	logger(`${semester.name} is being selected!`);
-	await vtop.select('select[id="semesterSubId"]', semester.value);
-	logger(`${semester.name} has been selected!`);
-	await vtop.waitForNetworkIdle();
-}
-
-async function hasCourses(vtop: Page, semester: Semester): Promise<boolean> {
-	logger(`${semester.name} is being checked for courses!`);
-	const hasCourses = await vtop.evaluate(() => {
-		return document.querySelectorAll("#fixedTableContainer").length > 0;
-	});
-	logger(`${semester.name} has ${hasCourses ? "" : "no "}courses!`);
-	return hasCourses;
-}
-
-async function extractCourses(vtop: Page, semester: Semester): Promise<Course[]> {
-	logger(`${semester.name}'s courses are being extracted!`);
-	const courses = await vtop.evaluate(() => {
-		const courses: Course[] = [];
-		document.querySelectorAll("#fixedTableContainer tr.tableContent").forEach((row) => {
-			const tds = row.querySelectorAll("td");
-			courses.push({
-				serialNumber: Number(tds[0].innerText.trim()),
-				classNumber: tds[1].innerText.trim(),
-				courseCode: tds[2].innerText.trim(),
-				courseTitle: tds[3].innerText.trim(),
-				courseType: tds[4].innerText.trim(),
-				facultyName: tds[5].innerText.trim(),
-				assignments: []
+const internal = {
+	async extractCourses(vtop: Page, semester: Semester): Promise<Course[]> {
+		logger(`${semester.name}'s courses are being extracted!`);
+		const courses = await vtop.evaluate(() => {
+			const courses: Course[] = [];
+			document.querySelectorAll("#fixedTableContainer tr.tableContent").forEach((row) => {
+				const tds = row.querySelectorAll("td");
+				courses.push({
+					serialNumber: Number(tds[0].innerText.trim()),
+					classNumber: tds[1].innerText.trim(),
+					courseCode: tds[2].innerText.trim(),
+					courseTitle: tds[3].innerText.trim(),
+					courseType: tds[4].innerText.trim(),
+					facultyName: tds[5].innerText.trim(),
+					assignments: []
+				});
 			});
+			return courses;
 		});
+		logger(`${semester.name} has ${courses.length} courses!`);
 		return courses;
-	});
-	logger(`${semester.name} has ${courses.length} courses!`);
-	return courses;
-}
+	},
+	async hasCourses(vtop: Page, semester: Semester): Promise<boolean> {
+		logger(`${semester.name} is being checked for courses!`);
+		const hasCourses = await vtop.evaluate(() => {
+			return document.querySelectorAll("#fixedTableContainer").length > 0;
+		});
+		logger(`${semester.name} has ${hasCourses ? "" : "no "}courses!`);
+		return hasCourses;
+	}
+};
 
 export default {
-	async main(vtop: Page) {
+	async main(vtop: Page, semester: Semester, isLast: boolean) {
 		logger("Starting!");
-		const semesters = await extractSemesters(vtop);
-		logger(`Creating folders for semesters: ${semesters.map((s) => s.name).join(", ")}`);
-		await directory.createFoldersAt(
-			await directory.getBasePath(),
-			semesters.map((s) => s.name)
-		);
-		for (let i = 0; i < semesters.length; i++) {
-			await vtop.waitForNetworkIdle();
-			await selectSemester(vtop, semesters[i]);
-			await vtop.waitForNetworkIdle();
-			if (await hasCourses(vtop, semesters[i])) {
-				await utils.sleep(1000);
-				semesters[i].courses = await extractCourses(vtop, semesters[i]);
-				for (let j = 0; j < semesters[i].courses.length; j++) {
-					semesters[i].courses[j] = await course.main(vtop, semesters[i], semesters[i].courses[j]);
-				}
-				console.log(semesters[i]);
-			} else if (i < semesters.length - 1) {
-				logger("Moving on to the next semester!");
+		if (await internal.hasCourses(vtop, semester)) {
+			directory.create(semester);
+			semester.courses = await internal.extractCourses(vtop, semester);
+			for (let j = 0; j < semester.courses.length; j++) {
+				semester.courses[j] = await course.main(vtop, semester, semester.courses[j]);
 			}
-			await utils.sleep(1000);
+		} else if (!isLast) {
+			logger("Moving on to the next semester!");
 		}
-		await directory.writeFile(await directory.getBasePath(), "semesters.json", JSON.stringify(semesters, null, 4));
+		await directory.write(semester);
 		logger("Done!");
+		return semester;
 	}
 };
