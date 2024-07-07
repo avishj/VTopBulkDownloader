@@ -1,17 +1,16 @@
 import dotenv from "dotenv";
 import setup from "./setup.js";
-import semester from "./semester.js";
-import directory from "./directory.js";
-import utils from "./utils.js";
+import log from "./utils/log.js";
+import output from "./output.js";
 
 // Loading the environment variables
 dotenv.config();
 
 async function main() {
-	await utils.log.init();
-	await directory.init();
+	const timestamp = new Date().toISOString();
+	await log.init(timestamp);
 	const vtop = await setup.main();
-	await semester.main(vtop);
+	await output.main(timestamp, vtop);
 }
 
 await main();
