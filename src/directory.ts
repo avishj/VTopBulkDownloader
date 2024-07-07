@@ -1,22 +1,20 @@
-import { Context } from "./enums.js";
-import { Course, Output, Semester } from "./types.js";
-import utils from "./utils.js";
+import { Context } from "./utils/enums.js";
+import log from "./utils/log.js";
+import { Course, Output, Semester } from "./utils/types.js";
 import fs from "fs-extra";
 import path from "node:path";
 
-const logger = utils.log.logger.bind(null, Context.Directory);
+const logger = log.logger.bind(null, Context.Directory);
 let basePath: string;
 
-export const core = {
-	getWorkingDirectory(): string {
-		logger(`Current working directory: ${process.cwd()}`);
-		return process.cwd();
-	}
-};
+export function init() {
+	logger("Initializing directory module!");
+	basePath = process.cwd();
+	logger(`Current working directory: ${basePath}!`);
+}
 
 export const output = {
-	async create() {
-		basePath = core.getWorkingDirectory();
+	create() {
 		fs.ensureDirSync(path.join(basePath, "output"));
 		logger(`Created output folder!`);
 	},
@@ -27,8 +25,8 @@ export const output = {
 };
 
 export const semester = {
-	async create(semester: Semester) {
-		await fs.ensureDir(path.join(basePath, "output", semester.name));
+	create(semester: Semester) {
+		fs.ensureDirSync(path.join(basePath, "output", semester.name));
 		logger(`Created semester folder: ${semester.name}!`);
 	},
 	async write(semester: Semester) {
@@ -38,8 +36,8 @@ export const semester = {
 };
 
 export const course = {
-	async create(semester: Semester, course: Course) {
-		await fs.ensureDir(path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle));
+	create(semester: Semester, course: Course) {
+		fs.ensureDirSync(path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle));
 		logger(`Created course folder: ${course.courseCode}!`);
 	},
 	async write(semester: Semester, course: Course) {
