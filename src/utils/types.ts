@@ -1,4 +1,5 @@
 export type Output = {
+	timestamp: string;
 	semesters: Semester[];
 };
 
