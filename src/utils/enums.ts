@@ -3,5 +3,6 @@ export enum Context {
 	Output = "Output",
 	Semester = "Semester",
 	Course = "Course",
+	Assignment = "Assignment",
 	Directory = "Directory"
 }
