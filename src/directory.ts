@@ -62,13 +62,27 @@ export default {
 		async download(vtop: Page, semester: Semester, course: Course, assignment: Assignment) {
 			if (assignment.questionPaper) {
 				const buffer = await internal.getBlobFromUrl(vtop, assignment.questionPaper);
-				await fs.writeFile(path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle, `${assignment.serialNumber} - ${assignment.title} - Question` + ".pdf"), buffer);
-				logger(`Wrote question paper: ${assignment.serialNumber} - ${assignment.title}!`);
+				if (buffer.length > 0) {
+					const file = path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle, `${assignment.serialNumber} - ${assignment.title} - Question` + ".pdf");
+					assignment.questionPaper = file;
+					await fs.writeFile(file, buffer);
+					logger(`Wrote question paper: ${assignment.serialNumber} - ${assignment.title}!`);
+				} else {
+					assignment.questionPaper = undefined;
+					logger(`No question paper found for ${assignment.serialNumber} - ${assignment.title}!`);
+				}
 			}
 			if (assignment.solutionPaper) {
 				const buffer = await internal.getBlobFromUrl(vtop, assignment.solutionPaper);
-				await fs.writeFile(path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle, `${assignment.serialNumber} - ${assignment.title} - Solution` + ".pdf"), buffer);
-				logger(`Wrote solution paper: ${assignment.serialNumber} - ${assignment.title}!`);
+				if (buffer.length > 0) {
+					const file = path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle, `${assignment.serialNumber} - ${assignment.title} - Solution` + ".pdf");
+					assignment.solutionPaper = file;
+					await fs.writeFile(file, buffer);
+					logger(`Wrote solution paper: ${assignment.serialNumber} - ${assignment.title}!`);
+				} else {
+					assignment.solutionPaper = undefined;
+					logger(`No solution paper found for ${assignment.serialNumber} - ${assignment.title}!`);
+				}
 			}
 		}
 	}
