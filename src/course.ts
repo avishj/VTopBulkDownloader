@@ -12,6 +12,7 @@ const internal = {
 		logger(`Navigating to ${course.courseCode} - ${course.courseTitle}!`);
 		await vtop.waitForNetworkIdle();
 		await vtop.evaluate(`myFunction('${course.classNumber}');`);
+		await vtop.waitForNetworkIdle();
 	},
 	async extractAssignments(vtop: Page, course: Course): Promise<Assignment[]> {
 		logger(`Downloading assignments for ${course.courseCode} - ${course.courseTitle}!`);
