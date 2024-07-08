@@ -1,14 +1,16 @@
-import puppeteer, { Page } from "puppeteer";
+import puppeteer, { Browser, Page } from "puppeteer";
 import { Context } from "./utils/enums.js";
 import log from "./utils/log.js";
 import helpers from "./utils/helpers.js";
 
 const logger = log.logger.bind(null, Context.Setup);
 
+let browser: Browser;
+
 const internal = {
 	async init() {
 		logger("Launching the browser!");
-		const browser = await puppeteer.launch({
+		browser = await puppeteer.launch({
 			headless: false,
 			args: [`--start-maximized`]
 		});
@@ -70,5 +72,9 @@ export default {
 		await internal.navigateToDAPage(vtop);
 		logger("Done!");
 		return vtop;
+	},
+	async destroy() {
+		logger("Closing the browser!");
+		await browser.close();
 	}
 };

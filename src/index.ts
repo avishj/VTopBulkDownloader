@@ -13,6 +13,7 @@ async function main() {
 	directory.init();
 	const vtop = await setup.main();
 	await output.main(timestamp, vtop);
+	await setup.destroy();
 }
 
 await main();
