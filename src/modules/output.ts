@@ -1,9 +1,9 @@
 import { Page } from "puppeteer";
-import { Context } from "./utils/enums.js";
-import { Output, Semester } from "./utils/types.js";
-import log from "./utils/log.js";
-import directory from "./directory.js";
-import helpers from "./utils/helpers.js";
+import { Context } from "../utils/enums.js";
+import { Output, Semester } from "../utils/types.js";
+import log from "../utils/log.js";
+import directory from "../utils/directory.js";
+import helpers from "../utils/helpers.js";
 import semester from "./semester.js";
 
 const logger = log.logger.bind(null, Context.Output);

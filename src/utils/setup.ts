@@ -1,7 +1,7 @@
 import puppeteer, { Browser, Page } from "puppeteer";
-import { Context } from "./utils/enums.js";
-import log from "./utils/log.js";
-import helpers from "./utils/helpers.js";
+import { Context } from "./enums.js";
+import log from "./log.js";
+import helpers from "./helpers.js";
 
 const logger = log.logger.bind(null, Context.Setup);
 

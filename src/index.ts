@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
-import setup from "./setup.js";
+import setup from "./utils/setup.js";
 import log from "./utils/log.js";
-import output from "./output.js";
-import directory from "./directory.js";
+import output from "./modules/output.js";
+import directory from "./utils/directory.js";
 
 // Loading the environment variables
 dotenv.config();

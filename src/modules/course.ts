@@ -3,7 +3,7 @@ import { Assignment, Course, Semester } from "./utils/types.js";
 import { Context } from "./utils/enums.js";
 import log from "./utils/log.js";
 import directory from "./directory.js";
-import assignment from "./assignment.js";
+import assignment from "./modules/assignment.js";
 
 const logger = log.logger.bind(null, Context.Course);
 
