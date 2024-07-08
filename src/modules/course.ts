@@ -4,6 +4,7 @@ import { Context } from "../utils/enums.js";
 import log from "../utils/log.js";
 import directory from "../utils/directory.js";
 import assignment from "../modules/assignment.js";
+import helpers from "../utils/helpers.js";
 
 const logger = log.logger.bind(null, Context.Course);
 
@@ -17,7 +18,7 @@ const internal = {
 	async extractAssignments(vtop: Page, course: Course): Promise<Assignment[]> {
 		logger(`Downloading assignments for ${course.courseCode} - ${course.courseTitle}!`);
 		await vtop.waitForNetworkIdle();
-		return await vtop.evaluate(() => {
+		return await vtop.evaluate((sanitize: Function) => {
 			const assignments: Assignment[] = [];
 			Array.from(document.querySelectorAll(".fixedTableContainer tr.tableContent"))
 				.slice(1)
@@ -25,7 +26,7 @@ const internal = {
 					const tds = row.querySelectorAll("td");
 					assignments.push({
 						serialNumber: Number(tds[0].innerText.trim()),
-						title: tds[1].innerText.trim(),
+						title: sanitize(tds[1].innerText.trim()),
 						maxMark: Number(tds[2].innerText.trim()),
 						weightage: Number(tds[3].innerText.trim()),
 						questionPaper: tds[5]?.querySelector("a")?.href,
@@ -35,7 +36,7 @@ const internal = {
 					});
 				});
 			return assignments;
-		});
+		}, helpers.sanitize);
 	},
 	async goBack(vtop: Page, semester: Semester): Promise<void> {
 		logger(`Going back to ${semester.name}!`);

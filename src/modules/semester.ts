@@ -4,28 +4,29 @@ import { Context } from "../utils/enums.js";
 import course from "./course.js";
 import log from "../utils/log.js";
 import directory from "../utils/directory.js";
+import helpers from "../utils/helpers.js";
 
 const logger = log.logger.bind(null, Context.Semester);
 
 const internal = {
 	async extractCourses(vtop: Page, semester: Semester): Promise<Course[]> {
 		logger(`${semester.name}'s courses are being extracted!`);
-		const courses = await vtop.evaluate(() => {
+		const courses = await vtop.evaluate((sanitize: Function) => {
 			const courses: Course[] = [];
 			document.querySelectorAll("#fixedTableContainer tr.tableContent").forEach((row) => {
 				const tds = row.querySelectorAll("td");
 				courses.push({
 					serialNumber: Number(tds[0].innerText.trim()),
-					classNumber: tds[1].innerText.trim(),
-					courseCode: tds[2].innerText.trim(),
-					courseTitle: tds[3].innerText.trim(),
-					courseType: tds[4].innerText.trim(),
-					facultyName: tds[5].innerText.trim(),
+					classNumber: sanitize(tds[1].innerText.trim()),
+					courseCode: sanitize(tds[2].innerText.trim()),
+					courseTitle: sanitize(tds[3].innerText.trim()),
+					courseType: sanitize(tds[4].innerText.trim()),
+					facultyName: sanitize(tds[5].innerText.trim()),
 					assignments: []
 				});
 			});
 			return courses;
-		});
+		}, helpers.sanitize);
 		logger(`${semester.name} has ${courses.length} courses!`);
 		return courses;
 	},
