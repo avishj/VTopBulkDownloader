@@ -48,10 +48,10 @@ export default {
 			for (let j = 0; j < semester.courses.length; j++) {
 				semester.courses[j] = await course.main(vtop, semester, semester.courses[j]);
 			}
+			await directory.semester.write(semester);
 		} else if (!isLast) {
 			logger("Moving on to the next semester!");
 		}
-		await directory.semester.write(semester);
 		logger("Done!");
 		return semester;
 	}
