@@ -1,6 +1,6 @@
-import { Context } from "./utils/enums.js";
-import log from "./utils/log.js";
-import { Assignment, Course, Output, Semester } from "./utils/types.js";
+import { Context } from "../utils/enums.js";
+import log from "../utils/log.js";
+import { Assignment, Course, Output, Semester } from "../utils/types.js";
 import fs from "fs-extra";
 import path from "node:path";
 import fetch from "node-fetch";
