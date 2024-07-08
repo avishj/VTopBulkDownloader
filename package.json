@@ -9,7 +9,7 @@
 		"start": "tsc && node dist/index.js"
 	},
 	"author": "Avish Jha",
-	"license": "MIT",
+	"license": "AGPL-3.0-or-later",
 	"dependencies": {
 		"dotenv": "^16.4.5",
 		"fs-extra": "^11.2.0",
