@@ -4,13 +4,21 @@ import { Assignment, Course, Output, Semester } from "./utils/types.js";
 import fs from "fs-extra";
 import path from "node:path";
 import fetch from "node-fetch";
+import { Page } from "puppeteer";
 
 const logger = log.logger.bind(null, Context.Directory);
 
 let basePath: string;
 const internal = {
-	async getBlobFromUrl(url: string) {
-		return Buffer.from(await (await fetch(url)).arrayBuffer());
+	async getBlobFromUrl(vtop: Page, url: string) {
+		const base64String = await vtop.evaluate(async (url: string) => {
+			const response = await fetch(url);
+			const blob = await response.blob();
+			const arrayBuffer = await blob.arrayBuffer();
+			const uint8Array = new Uint8Array(arrayBuffer);
+			return btoa(uint8Array.reduce((data, byte) => data + String.fromCharCode(byte), ""));
+		}, url);
+		return Buffer.from(base64String, "base64");
 	}
 };
 
@@ -51,14 +59,14 @@ export default {
 		}
 	},
 	assignment: {
-		async download(semester: Semester, course: Course, assignment: Assignment) {
+		async download(vtop: Page, semester: Semester, course: Course, assignment: Assignment) {
 			if (assignment.questionPaper) {
-				const buffer = await internal.getBlobFromUrl(assignment.questionPaper);
+				const buffer = await internal.getBlobFromUrl(vtop, assignment.questionPaper);
 				await fs.writeFile(path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle, `${assignment.serialNumber} - ${assignment.title} - Question` + ".pdf"), buffer);
 				logger(`Wrote question paper: ${assignment.serialNumber} - ${assignment.title}!`);
 			}
 			if (assignment.solutionPaper) {
-				const buffer = await internal.getBlobFromUrl(assignment.solutionPaper);
+				const buffer = await internal.getBlobFromUrl(vtop, assignment.solutionPaper);
 				await fs.writeFile(path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle, `${assignment.serialNumber} - ${assignment.title} - Solution` + ".pdf"), buffer);
 				logger(`Wrote solution paper: ${assignment.serialNumber} - ${assignment.title}!`);
 			}

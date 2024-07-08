@@ -33,7 +33,7 @@ export default {
 			logger(`Downloading solution paper for ${course.courseCode} - ${course.courseTitle} - ${assignment.title}!`);
 			assignment.solutionPaper = (await internal.getDownloadLink(vtop, assignment.solutionPaper)) ?? undefined;
 		}
-		await directory.assignment.download(semester, course, assignment);
+		await directory.assignment.download(vtop, semester, course, assignment);
 		logger("Done!");
 		return assignment;
 	}
