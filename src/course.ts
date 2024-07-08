@@ -43,7 +43,7 @@ const internal = {
 	},
 	async modifyVtopDownload(vtop: Page) {
 		logger("Overriding vtopDownload function!");
-		await vtop.evaluate(() => eval(`window.vtopDownload.toString().replace("window.open(urlText + '?' + params);", "return urlText + '?' + params;").replace("$.unblockUI();", "")`));
+		await vtop.evaluate(`eval(eval(window.vtopDownload.toString().replace("window.open(urlText + '?' + params);", "return urlText + '?' + params;").replace("$.unblockUI();", "")));`);
 	}
 };
 
