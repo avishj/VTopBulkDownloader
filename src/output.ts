@@ -2,7 +2,7 @@ import { Page } from "puppeteer";
 import { Context } from "./utils/enums.js";
 import { Output, Semester } from "./utils/types.js";
 import log from "./utils/log.js";
-import { output as directory } from "./directory.js";
+import directory from "./directory.js";
 import helpers from "./utils/helpers.js";
 import semester from "./semester.js";
 
@@ -36,7 +36,7 @@ const internal = {
 export default {
 	async main(timestamp: string, vtop: Page) {
 		logger("Starting!");
-		directory.create();
+		directory.output.create();
 		const output: Output = {
 			timestamp: timestamp,
 			semesters: []
@@ -47,7 +47,7 @@ export default {
 			output.semesters[i] = await semester.main(vtop, output.semesters[i], i === output.semesters.length - 1);
 			await helpers.sleep(1000);
 		}
-		await directory.write(output);
+		await directory.output.write(output);
 		logger("Done!");
 	}
 };

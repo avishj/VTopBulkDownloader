@@ -2,7 +2,7 @@ import { Page } from "puppeteer";
 import { Assignment, Course, Semester } from "./utils/types.js";
 import { Context } from "./utils/enums.js";
 import log from "./utils/log.js";
-import { course as directory } from "./directory.js";
+import directory from "./directory.js";
 import assignment from "./assignment.js";
 
 const logger = log.logger.bind(null, Context.Course);
@@ -50,7 +50,7 @@ const internal = {
 export default {
 	async main(vtop: Page, semester: Semester, course: Course): Promise<Course> {
 		logger("Starting!");
-		directory.create(semester, course);
+		directory.course.create(semester, course);
 		logger(`Starting downloading assignments for ${semester.name} - ${course.courseCode} - ${course.courseTitle}!`);
 		await internal.navigateTo(vtop, course);
 		await internal.modifyVtopDownload(vtop);
@@ -60,7 +60,7 @@ export default {
 		}
 		await internal.goBack(vtop, semester);
 		logger(`Downloaded assignments for ${semester.name} - ${course.courseCode} - ${course.courseTitle}!`);
-		await directory.write(semester, course);
+		await directory.course.write(semester, course);
 		logger("Done!");
 		return course;
 	}

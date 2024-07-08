@@ -2,7 +2,7 @@ import { Page } from "puppeteer";
 import log from "./utils/log.js";
 import { Context } from "./utils/enums.js";
 import { Assignment, Course, Semester } from "./utils/types.js";
-import { assignment as directory } from "./directory.js";
+import directory from "./directory.js";
 
 const logger = log.logger.bind(null, Context.Assignment);
 
@@ -31,7 +31,7 @@ export default {
 			logger(`Downloading solution paper for ${course.courseCode} - ${course.courseTitle} - ${assignment.title}!`);
 			assignment.solutionPaper = await internal.getDownloadLink(vtop, assignment.solutionPaper);
 		}
-		await directory.download(semester, course, assignment);
+		await directory.assignment.download(semester, course, assignment);
 		logger("Done!");
 		return assignment;
 	}

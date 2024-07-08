@@ -3,7 +3,7 @@ import { Course, Semester } from "./utils/types.js";
 import { Context } from "./utils/enums.js";
 import course from "./course.js";
 import log from "./utils/log.js";
-import { semester as directory } from "./directory.js";
+import directory from "./directory.js";
 
 const logger = log.logger.bind(null, Context.Semester);
 
@@ -43,7 +43,7 @@ export default {
 	async main(vtop: Page, semester: Semester, isLast: boolean) {
 		logger("Starting!");
 		if (await internal.hasCourses(vtop, semester)) {
-			directory.create(semester);
+			directory.semester.create(semester);
 			semester.courses = await internal.extractCourses(vtop, semester);
 			for (let j = 0; j < semester.courses.length; j++) {
 				semester.courses[j] = await course.main(vtop, semester, semester.courses[j]);
@@ -51,7 +51,7 @@ export default {
 		} else if (!isLast) {
 			logger("Moving on to the next semester!");
 		}
-		await directory.write(semester);
+		await directory.semester.write(semester);
 		logger("Done!");
 		return semester;
 	}
