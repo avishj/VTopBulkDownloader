@@ -42,6 +42,8 @@ const internal = {
 			width: await vtop.evaluate(() => window.screen.width),
 			height: await vtop.evaluate(() => window.screen.height)
 		});
+		logger("Exposing functions!");
+		vtop.exposeFunction("sanitize", helpers.sanitize);
 		return vtop;
 	},
 	async navigateToLoginPage(vtop: Page) {
