@@ -5,7 +5,8 @@ import path from "node:path";
 let logPath: string;
 
 export default {
-	async init(timestamp: string) {
+	init(timestamp: string) {
+		fs.ensureDirSync(path.join(process.cwd(), "output"));
 		logPath = path.join(process.cwd(), "output", timestamp.replace(/:/g, "-") + ".log"); // Not using directory as causes circular dependency.
 	},
 	async logger(context: Context, message: string) {
