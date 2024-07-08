@@ -1,11 +1,18 @@
 import { Context } from "./utils/enums.js";
 import log from "./utils/log.js";
-import { Course, Output, Semester } from "./utils/types.js";
+import { Assignment, Course, Output, Semester } from "./utils/types.js";
 import fs from "fs-extra";
 import path from "node:path";
+import fetch from "node-fetch";
 
 const logger = log.logger.bind(null, Context.Directory);
 let basePath: string;
+
+const internal = {
+	async getBlobFromUrl(url: string) {
+		return Buffer.from(await (await fetch(url)).arrayBuffer());
+	}
+};
 
 export function init() {
 	logger("Initializing directory module!");
@@ -43,5 +50,20 @@ export const course = {
 	async write(semester: Semester, course: Course) {
 		await fs.writeFile(path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle, "course.json"), JSON.stringify(course, null, 4));
 		logger(`Wrote course file: ${course.courseCode} - ${course.courseTitle}!`);
+	}
+};
+
+export const assignment = {
+	async download(semester: Semester, course: Course, assignment: Assignment) {
+		if (assignment.questionPaper) {
+			const buffer = await internal.getBlobFromUrl(assignment.questionPaper);
+			await fs.writeFile(path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle, `${assignment.serialNumber} - ${assignment.title} - Question` + ".pdf"), buffer);
+			logger(`Wrote question paper: ${assignment.serialNumber} - ${assignment.title}!`);
+		}
+		if (assignment.solutionPaper) {
+			const buffer = await internal.getBlobFromUrl(assignment.solutionPaper);
+			await fs.writeFile(path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle, `${assignment.serialNumber} - ${assignment.title} - Solution` + ".pdf"), buffer);
+			logger(`Wrote solution paper: ${assignment.serialNumber} - ${assignment.title}!`);
+		}
 	}
 };
