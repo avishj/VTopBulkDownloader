@@ -34,7 +34,7 @@ export default {
 			logger(`Created output folder!`);
 		},
 		async write(output: Output) {
-			await fs.writeFile(path.join(basePath, "output.json"), JSON.stringify(output, null, 4));
+			await fs.writeFile(path.join(basePath, "output", "output.json"), JSON.stringify(output, null, 4));
 			logger(`Wrote output file!`);
 		}
 	},
