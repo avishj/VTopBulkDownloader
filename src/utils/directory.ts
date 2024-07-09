@@ -76,7 +76,7 @@ export default {
 	},
 	course: {
 		create(semester: Semester, course: Course) {
-			fs.ensureDirSync(path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle));
+			fs.ensureDirSync(path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle + " - " + course.courseType));
 			logger(`Created course folder: ${course.courseCode}!`);
 		},
 		async write(semester: Semester, course: Course) {
