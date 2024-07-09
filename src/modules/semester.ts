@@ -32,17 +32,23 @@ const logger = log.logger.bind(null, Context.Semester);
 const internal = {
 	async extractCourses(vtop: Page, semester: Semester): Promise<Course[]> {
 		logger(`${semester.name}'s courses are being extracted!`);
-		const courses = await vtop.evaluate((sanitize: Function) => {
+		const courses = await vtop.evaluate(async () => {
 			const courses: Course[] = [];
-			document.querySelectorAll("#fixedTableContainer tr.tableContent").forEach((row) => {
-				const tds = row.querySelectorAll("td");
+			const rows = document.querySelectorAll("#fixedTableContainer tr.tableContent");
+			for (let i = 0; i < rows.length; i++) {
+				const tds = rows[i].querySelectorAll("td");
 				courses.push({
 					serialNumber: Number(tds[0].innerText.trim()),
-					classNumber: sanitize(tds[1].innerText.trim()),
-					courseCode: sanitize(tds[2].innerText.trim()),
-					courseTitle: sanitize(tds[3].innerText.trim()),
-					courseType: sanitize(tds[4].innerText.trim()),
-					facultyName: sanitize(tds[5].innerText.trim()),
+					// @ts-ignore
+					classNumber: await sanitize(tds[1].innerText.trim()),
+					// @ts-ignore
+					courseCode: await sanitize(tds[2].innerText.trim()),
+					// @ts-ignore
+					courseTitle: await sanitize(tds[3].innerText.trim()),
+					// @ts-ignore
+					courseType: await sanitize(tds[4].innerText.trim()),
+					// @ts-ignore
+					facultyName: await sanitize(tds[5].innerText.trim()),
 					assignments: []
 				});
 			});
