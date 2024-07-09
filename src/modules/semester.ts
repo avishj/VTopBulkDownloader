@@ -51,7 +51,7 @@ const internal = {
 					facultyName: await sanitize(tds[5].innerText.trim()),
 					assignments: []
 				});
-			});
+			}
 			return courses;
 		});
 		logger(`${semester.name} has ${courses.length} courses!`);
@@ -73,6 +73,7 @@ export default {
 		if (await internal.hasCourses(vtop, semester)) {
 			directory.semester.create(semester);
 			semester.courses = await internal.extractCourses(vtop, semester);
+			console.log(semester.courses);
 			for (let j = 0; j < semester.courses.length; j++) {
 				semester.courses[j] = await course.main(vtop, semester, semester.courses[j]);
 			}
