@@ -39,25 +39,25 @@ const internal = {
 	async extractAssignments(vtop: Page, course: Course): Promise<Assignment[]> {
 		logger(`Downloading assignments for ${course.courseCode} - ${course.courseTitle}!`);
 		await vtop.waitForNetworkIdle();
-		return await vtop.evaluate((sanitize: Function) => {
+		return await vtop.evaluate(async () => {
 			const assignments: Assignment[] = [];
-			Array.from(document.querySelectorAll(".fixedTableContainer tr.tableContent"))
-				.slice(1)
-				.forEach((row) => {
-					const tds = row.querySelectorAll("td");
-					assignments.push({
-						serialNumber: Number(tds[0].innerText.trim()),
-						title: sanitize(tds[1].innerText.trim()),
-						maxMark: Number(tds[2].innerText.trim()),
-						weightage: Number(tds[3].innerText.trim()),
-						questionPaper: tds[5]?.querySelector("a")?.href,
-						dueDate: tds[4]?.querySelector("span")?.innerText.trim(),
-						lastUpdatedOn: tds[6]?.querySelector("span")?.innerText.trim(),
-						solutionPaper: tds[8]?.querySelector("a")?.href
-					});
+			const rows = document.querySelectorAll(".fixedTableContainer tr.tableContent");
+			for (let i = 1; i < rows.length; i++) {
+				const tds = rows[i].querySelectorAll("td");
+				assignments.push({
+					serialNumber: Number(tds[0].innerText.trim()),
+					// @ts-ignore
+					title: await sanitize(tds[1].innerText.trim()),
+					maxMark: Number(tds[2].innerText.trim()),
+					weightage: Number(tds[3].innerText.trim()),
+					questionPaper: tds[5]?.querySelector("a")?.href,
+					dueDate: tds[4]?.querySelector("span")?.innerText.trim(),
+					lastUpdatedOn: tds[6]?.querySelector("span")?.innerText.trim(),
+					solutionPaper: tds[8]?.querySelector("a")?.href
 				});
+			}
 			return assignments;
-		}, helpers.sanitize);
+		});
 	},
 	async goBack(vtop: Page, semester: Semester): Promise<void> {
 		logger(`Going back to ${semester.name}!`);
@@ -76,6 +76,7 @@ export default {
 		directory.course.create(semester, course);
 		logger(`Starting downloading assignments for ${semester.name} - ${course.courseCode} - ${course.courseTitle}!`);
 		await internal.navigateTo(vtop, course);
+		await helpers.sleep(1000);
 		await internal.modifyVtopDownload(vtop);
 		course.assignments = await internal.extractAssignments(vtop, course);
 		for (let i = 0; i < course.assignments.length; i++) {
