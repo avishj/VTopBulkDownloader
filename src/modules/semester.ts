@@ -53,7 +53,7 @@ const internal = {
 				});
 			});
 			return courses;
-		}, helpers.sanitize);
+		});
 		logger(`${semester.name} has ${courses.length} courses!`);
 		return courses;
 	},
