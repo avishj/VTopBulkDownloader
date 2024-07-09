@@ -86,6 +86,7 @@ export default {
 	},
 	assignment: {
 		async download(vtop: Page, semester: Semester, course: Course, assignment: Assignment) {
+			await vtop.waitForNetworkIdle();
 			if (assignment.questionPaper) {
 				const buffer = await internal.getBlobFromUrl(vtop, assignment.questionPaper);
 				if (buffer.length > 0) {
@@ -98,6 +99,7 @@ export default {
 					logger(`No question paper found for ${assignment.serialNumber} - ${assignment.title}!`);
 				}
 			}
+			await vtop.waitForNetworkIdle();
 			if (assignment.solutionPaper) {
 				const buffer = await internal.getBlobFromUrl(vtop, assignment.solutionPaper);
 				if (buffer.length > 0) {
@@ -110,6 +112,7 @@ export default {
 					logger(`No solution paper found for ${assignment.serialNumber} - ${assignment.title}!`);
 				}
 			}
+			await vtop.waitForNetworkIdle();
 		}
 	}
 };

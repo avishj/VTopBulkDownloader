@@ -47,6 +47,7 @@ const internal = {
 		return semesters;
 	},
 	async selectSemester(vtop: Page, semester: Semester): Promise<void> {
+		await vtop.waitForNetworkIdle();
 		logger(`${semester.name} - ${semester.value} is being selected!`);
 		await vtop.select('select[id="semesterSubId"]', semester.value);
 		logger(`${semester.name} - ${semester.value} has been selected!`);

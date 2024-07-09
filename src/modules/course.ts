@@ -31,8 +31,8 @@ const logger = log.logger.bind(null, Context.Course);
 
 const internal = {
 	async navigateTo(vtop: Page, course: Course): Promise<void> {
-		logger(`Navigating to ${course.courseCode} - ${course.courseTitle}!`);
 		await vtop.waitForNetworkIdle();
+		logger(`Navigating to ${course.courseCode} - ${course.courseTitle}!`);
 		await vtop.evaluate(`myFunction('${course.classNumber}');`);
 		await vtop.waitForNetworkIdle();
 	},
