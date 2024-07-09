@@ -90,7 +90,7 @@ export default {
 			if (assignment.questionPaper) {
 				const buffer = await internal.getBlobFromUrl(vtop, assignment.questionPaper);
 				if (buffer.length > 0) {
-					const file = path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle, `${assignment.serialNumber} - ${assignment.title} - Question` + ".pdf");
+					const file = path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle, `${assignment.serialNumber} - Question - ${assignment.title}` + ".pdf");
 					assignment.questionPaper = file;
 					await fs.writeFile(file, buffer);
 					logger(`Wrote question paper: ${assignment.serialNumber} - ${assignment.title}!`);
@@ -103,7 +103,7 @@ export default {
 			if (assignment.solutionPaper) {
 				const buffer = await internal.getBlobFromUrl(vtop, assignment.solutionPaper);
 				if (buffer.length > 0) {
-					const file = path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle, `${assignment.serialNumber} - ${assignment.title} - Solution` + ".pdf");
+					const file = path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle, `${assignment.serialNumber} - Solution - ${assignment.title}` + ".pdf");
 					assignment.solutionPaper = file;
 					await fs.writeFile(file, buffer);
 					logger(`Wrote solution paper: ${assignment.serialNumber} - ${assignment.title}!`);
