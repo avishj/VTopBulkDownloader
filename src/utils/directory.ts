@@ -33,11 +33,15 @@ let basePath: string;
 const internal = {
 	async getBlobFromUrl(vtop: Page, url: string) {
 		const base64String = await vtop.evaluate(async (url: string) => {
-			const response = await fetch(url);
-			const blob = await response.blob();
-			const arrayBuffer = await blob.arrayBuffer();
-			const uint8Array = new Uint8Array(arrayBuffer);
-			return btoa(uint8Array.reduce((data, byte) => data + String.fromCharCode(byte), ""));
+			const response = await fetch(url).catch((reason) => console.log("Error fetching blob from url", reason));
+			await new Promise((resolve) => setTimeout(resolve, 30000));
+			if (response) {
+				const blob = await response.blob();
+				const arrayBuffer = await blob.arrayBuffer();
+				const uint8Array = new Uint8Array(arrayBuffer);
+				return btoa(uint8Array.reduce((data, byte) => data + String.fromCharCode(byte), ""));
+			}
+			return "";
 		}, url);
 		return Buffer.from(base64String, "base64");
 	}
