@@ -100,7 +100,8 @@ export default {
 					logger(`No question paper found for ${assignment.serialNumber} - ${assignment.title}!`);
 				}
 			}
-			await vtop.waitForNetworkIdle();
+			// Commented to allow for faster downloads.
+			// await vtop.waitForNetworkIdle();
 			if (assignment.solutionPaper) {
 				const obj = await internal.getBlobFromUrl(vtop, assignment.solutionPaper);
 				if (obj.buffer.length > 0) {
