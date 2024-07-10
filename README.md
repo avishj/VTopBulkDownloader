@@ -2,22 +2,70 @@
 
 An easy way to download your VTop DA's in bulk. Downloads all your semesters' question papers, uploaded assignments, and all associated metadata, neatly organized in a tree like folder structure.
 
-## Usage
+## Installation and Usage
 
-1. Clone this repository to your computer.
-2. Run `npm install` to install all dependencies.
-3. Create a `.env` file in the root directory of the project with the following contents:
+### Prerequisites
 
+Ensure you have the following installed on your computer:
+- Node.js (v18.x or higher)
+- npm (v8.x or higher)
+- git (v2.x or higher)
+
+### Installation
+
+1. **Clone the Repository**
+
+```sh
+    cd <desired-project-directory>
+    git clone https://github.com/avishj/VTopBulkDownloader.git
+    cd VTopBulkDownloader
 ```
+
+2. **Install Dependencies**
+
+```sh
+    npm install
+```
+
+3. **Configure Environment Variables**
+
+Create a .env file in the root directory of the project with the following contents:
+
+```env
 VTOP_USERNAME=<your VTop username>
 VTOP_PASSWORD=<your VTop password>
 ```
-4. Run `npm run start` to compile the TypeScript code and start the program.
-5. An automated browser window will open, and the credentials you entered in the `.env` file will be used to log in.
-6. You will be prompted to solve a CAPTCHA, if required. Click the login button to continue.
-7. After logging in, the program is self sufficient, and you can let the program run for a while to download all your data.
-8. You can monitor the progress of the download in the `$ console` or via the `output/*.log` file.
-9.  The program will automatically exit once it has finished downloading all your data.
+
+### Usage
+
+1. **Compile and Start the Program**
+
+```sh
+    npm run start
+```
+
+This command will compile the TypeScript code and start the program.
+
+2. **Login Process**
+
+An automated browser window will open, using the credentials specified in the .env file to log in.
+
+ - If prompted to solve a CAPTCHA, please solve it manually.
+   - You may face either a custom VTop CAPTCHA or a Google reCAPTCHA or none at all.
+ - Click the login button to proceed.
+
+### Monitoring and Completion
+
+1. **Monitor Progress**
+
+You can monitor the download progress through:
+
+ - The console output.
+ - The log file located at output/<DateTime of Execution>.log.
+
+2. **Completion**
+
+The program will automatically exit once it has finished downloading all the data.
 
 ## Output
 
