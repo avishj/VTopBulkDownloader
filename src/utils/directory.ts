@@ -46,6 +46,10 @@ const internal = {
 			return { buffer: "", contentType: "" };
 		}, url);
 		return { buffer: Buffer.from(obj.buffer, "base64"), fileType: mime.extension(obj.contentType) };
+	},
+	async setCustomDates(filePath: string, date: string) {
+		const lastModified = new Date(date);
+		await fs.utimes(filePath, lastModified, lastModified);
 	}
 };
 
@@ -94,6 +98,9 @@ export default {
 					const file = path.join("output", semester.name, course.courseCode + " - " + course.courseTitle + " - " + course.courseType, `${assignment.serialNumber} - Question - ${assignment.title}` + "." + obj.fileType);
 					assignment.questionPaper = file;
 					await fs.writeFile(file, obj.buffer);
+					if (assignment.lastUpdatedOn) {
+						await internal.setCustomDates(file, assignment.lastUpdatedOn);
+					}
 					logger(`Wrote question paper: ${assignment.serialNumber} - ${assignment.title}!`);
 				} else {
 					assignment.questionPaper = undefined;
@@ -108,6 +115,9 @@ export default {
 					const file = path.join("output", semester.name, course.courseCode + " - " + course.courseTitle + " - " + course.courseType, `${assignment.serialNumber} - Solution - ${assignment.title}` + "." + obj.fileType);
 					assignment.solutionPaper = file;
 					await fs.writeFile(file, obj.buffer);
+					if (assignment.lastUpdatedOn) {
+						await internal.setCustomDates(file, assignment.lastUpdatedOn);
+					}
 					logger(`Wrote solution paper: ${assignment.serialNumber} - ${assignment.title}!`);
 				} else {
 					assignment.solutionPaper = undefined;
