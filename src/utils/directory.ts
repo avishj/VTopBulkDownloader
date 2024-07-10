@@ -49,6 +49,7 @@ const internal = {
 	},
 	async setCustomDates(filePath: string, date: string) {
 		const lastModified = new Date(date);
+		const validDate = isNaN(lastModified.getTime()) ? new Date() : lastModified;
 		await fs.utimes(filePath, lastModified, lastModified);
 	}
 };
