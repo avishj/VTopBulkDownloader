@@ -13,12 +13,11 @@ VTOP_USERNAME=<your VTop username>
 VTOP_PASSWORD=<your VTop password>
 ```
 4. Run `npm run start` to compile the TypeScript code and start the program.
-5. An automated browser window will open, prompting you to log in to your VTop account.
-6. The credentials you entered in the `.env` file will be used to log in.
-7. You will be prompted to solve a CAPTCHA. (Optional)
-8. After logging in, you can let the program run for a while to download all your data.
-9. You can monitor the progress of the download in the `$ console` or via the `output/*.log` file.
-10. The program will automatically exit once it has finished downloading all your data.
+5. An automated browser window will open, and the credentials you entered in the `.env` file will be used to log in.
+6. You will be prompted to solve a CAPTCHA, if required. Click the login button to continue.
+7. After logging in, the program is self sufficient, and you can let the program run for a while to download all your data.
+8. You can monitor the progress of the download in the `$ console` or via the `output/*.log` file.
+9.  The program will automatically exit once it has finished downloading all your data.
 
 ## Output
 
@@ -49,20 +48,26 @@ output
 │   └── ...
 ├── <DateTime>.log
 └── output.json
+```
+### Nomenclature
 
-- Question papers are named as <Index> - Question - <DA Name>.<File Extension>.
-- Solution papers are named as <Index> - Solution - <DA Name>.<File Extension>.
-- Course.json holds the metadata of the course.
-    - serialNumber: The serial number of the course. (eg. 1)
-    - classNumber: The class number of the course. (eg. VL2020210106391)
-    - courseCode: The course code of the course. (eg. CHY1701)
-    - courseTitle: The title of the course. (eg. Environmental Sciences)
-    - courseType: The type of the course. (eg. TH)
-    - facultyName: The name of the faculty teaching the course. (eg. AMIT KUMAR TIWARI - SAS)
-    - assignments: The list of assignments in the course.
-        - serialNumber: The serial number of the assignment. (eg. 1)
-        - title: The title of the assignment. (eg. Assignment 1)
-        - maxMark: The maximum mark of the course. (eg. 10)
+- All the output files are in the `output` folder.
+- The semesters are name as `<Semester Name>`.
+- The courses are named as `<Course Name> - <Course Code> - <Course Type>`.
+- Question papers are named as `<Index> - Question - <DA Name>.<File Extension>`.
+- Solution papers are named as `<Index> - Solution - <DA Name>.<File Extension>`.
+- 
+- `course.json` holds the metadata of the course.
+    - `serialNumber`: The serial number of the course. (eg. 1)
+    - `classNumber`: The class number of the course. (eg. VL2020210106391)
+    - `courseCode`: The course code of the course. (eg. CHY1701)
+    - `courseTitle`: The title of the course. (eg. Environmental Sciences)
+    - `courseType`: The type of the course. (eg. TH)
+    - `facultyName`: The name of the faculty teaching the course. (eg. AMIT KUMAR TIWARI - SAS)
+    - `assignments`: The list of assignments in the course.
+        - `serialNumber`: The serial number of the assignment.
+        - `title`: The title of the assignment.
+        - `maxMark`: The maximum mark of the course. (eg. 10)
         - weightage: The weightage of the assignment. (eg. 10 (%))
         - questionPaper: The path to the question paper. (eg. output/Fall Semester 2020-21/CHY1002 - Environmental Sciences - TH/2 - Question - Digital Assignment - II.pdf)
         - dueDate: The due date of the assignment. (eg. 04-Dec-2020)
