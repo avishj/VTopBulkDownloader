@@ -16,15 +16,15 @@ Ensure you have the following installed on your computer:
 1. **Clone the Repository**
 
 ```sh
-    cd <desired-project-directory>
-    git clone https://github.com/avishj/VTopBulkDownloader.git
-    cd VTopBulkDownloader
+cd <desired-project-directory>
+git clone https://github.com/avishj/VTopBulkDownloader.git
+cd VTopBulkDownloader
 ```
 
 2. **Install Dependencies**
 
 ```sh
-    npm install
+npm install
 ```
 
 3. **Configure Environment Variables**
@@ -41,7 +41,7 @@ VTOP_PASSWORD=<your VTop password>
 1. **Compile and Start the Program**
 
 ```sh
-    npm run start
+npm run start
 ```
 
 This command will compile the TypeScript code and start the program.
