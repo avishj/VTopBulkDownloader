@@ -36,7 +36,7 @@ const internal = {
 			args: [`--start-maximized`]
 		});
 		logger("Creating a new page!");
-		const vtop = await browser.newPage();
+		const [vtop] = await browser.pages();
 		logger("Setting the viewport!");
 		await vtop.setViewport({
 			width: await vtop.evaluate(() => window.screen.width),
