@@ -56,8 +56,14 @@ output
 - The courses are named as `<Course Name> - <Course Code> - <Course Type>`.
 - Question papers are named as `<Index> - Question - <DA Name>.<File Extension>`.
 - Solution papers are named as `<Index> - Solution - <DA Name>.<File Extension>`.
-- 
-- `course.json` holds the metadata of the course.
+- Logs are stored as `<DateTime of Execution>.log`.
+- The `output.json` file holds the metadata of all the semesters.
+- The `semester.json` file holds the metadata of the semester and all the courses for a chosen semester.
+- The `course.json` file holds the metadata of the course and all the assignments for a chosen course.
+
+### Metadata
+
+- `course.json`:
     - `serialNumber`: The serial number of the course. (eg. 1)
     - `classNumber`: The class number of the course. (eg. VL2020210106391)
     - `courseCode`: The course code of the course. (eg. CHY1701)
@@ -68,13 +74,11 @@ output
         - `serialNumber`: The serial number of the assignment.
         - `title`: The title of the assignment.
         - `maxMark`: The maximum mark of the course. (eg. 10)
-        - weightage: The weightage of the assignment. (eg. 10 (%))
-        - questionPaper: The path to the question paper. (eg. output/Fall Semester 2020-21/CHY1002 - Environmental Sciences - TH/2 - Question - Digital Assignment - II.pdf)
-        - dueDate: The due date of the assignment. (eg. 04-Dec-2020)
-        - lastUpdatedOn: The last updated date of the assignment. (eg. 04 Dec 2020 02:03 PM)
-        - solutionPaper: The path to the solution paper. (eg. output/Fall Semester 2020-21/CHY1002 - Environmental Sciences - TH/2 - Solution - Digital Assignment - II.pdf)
-- Semester.json hold the metadata of the semester.
+        - `weightage`: The weightage of the assignment. (eg. 10 (%))
+        - `questionPaper`: The path to the question paper. (eg. output/Fall Semester 2020-21/CHY1002 - Environmental Sciences - TH/2 - Question - Digital Assignment - II.pdf)
+        - `dueDate`: The due date of the assignment. (eg. 04-Dec-2020)
+        - `lastUpdatedOn`: The last updated date of the assignment. (eg. 04 Dec 2020 02:03 PM)
+        - `solutionPaper`: The path to the solution paper. (eg. output/Fall Semester 2020-21/CHY1002 - Environmental Sciences - TH/2 - Solution - Digital Assignment - II.pdf) 
+- `semester.json`:
 - DateTime.log is the log file of the program.
 - Output.json is the metadata of all the semesters.
-
-```
