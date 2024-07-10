@@ -81,7 +81,7 @@ export default {
 			logger(`Created course folder: ${course.courseCode}!`);
 		},
 		async write(semester: Semester, course: Course) {
-			await fs.writeFile(path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle, "course.json"), JSON.stringify(course, null, 4));
+			await fs.writeFile(path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle + " - " + course.courseType, "course.json"), JSON.stringify(course, null, 4));
 			logger(`Wrote course file: ${course.courseCode} - ${course.courseTitle}!`);
 		}
 	},
@@ -91,7 +91,7 @@ export default {
 			if (assignment.questionPaper) {
 				const obj = await internal.getBlobFromUrl(vtop, assignment.questionPaper);
 				if (obj.buffer.length > 0) {
-					const file = path.join("output", semester.name, course.courseCode + " - " + course.courseTitle, `${assignment.serialNumber} - Question - ${assignment.title}` + "." + obj.fileType);
+					const file = path.join("output", semester.name, course.courseCode + " - " + course.courseTitle + " - " + course.courseType, `${assignment.serialNumber} - Question - ${assignment.title}` + "." + obj.fileType);
 					assignment.questionPaper = file;
 					await fs.writeFile(file, obj.buffer);
 					logger(`Wrote question paper: ${assignment.serialNumber} - ${assignment.title}!`);
@@ -105,7 +105,7 @@ export default {
 			if (assignment.solutionPaper) {
 				const obj = await internal.getBlobFromUrl(vtop, assignment.solutionPaper);
 				if (obj.buffer.length > 0) {
-					const file = path.join("output", semester.name, course.courseCode + " - " + course.courseTitle, `${assignment.serialNumber} - Solution - ${assignment.title}` + "." + obj.fileType);
+					const file = path.join("output", semester.name, course.courseCode + " - " + course.courseTitle + " - " + course.courseType, `${assignment.serialNumber} - Solution - ${assignment.title}` + "." + obj.fileType);
 					assignment.solutionPaper = file;
 					await fs.writeFile(file, obj.buffer);
 					logger(`Wrote solution paper: ${assignment.serialNumber} - ${assignment.title}!`);
