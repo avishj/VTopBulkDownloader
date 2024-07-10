@@ -33,7 +33,7 @@ const internal = {
 		logger("Launching the browser!");
 		browser = await puppeteer.launch({
 			headless: false,
-			args: [`--start-maximized`]
+			args: [`--start-maximized`, "--disable-features=SidePanelPinning"]
 		});
 		logger("Creating a new page!");
 		const [vtop] = await browser.pages();
