@@ -35,17 +35,17 @@ const internal = {
 		const obj = await vtop.evaluate(async (url: string) => {
 			const response = await fetch(url).catch((reason) => console.log("Error fetching blob from url", reason));
 			if (response) {
-				const fileType = mime.extension(response.headers.get("content-type") ?? "application/pdf");
+				const contentType = response.headers.get("content-type") ?? "application/pdf";
 				const blob = await response.blob();
 				const arrayBuffer = await blob.arrayBuffer();
 				const uint8Array = new Uint8Array(arrayBuffer);
-				return { buffer: btoa(uint8Array.reduce((data, byte) => data + String.fromCharCode(byte), "")), fileType: fileType };
+				return { buffer: btoa(uint8Array.reduce((data, byte) => data + String.fromCharCode(byte), "")), contentType: contentType };
 			} else {
 				await new Promise((resolve) => setTimeout(resolve, 30000));
 			}
-			return { buffer: "", fileType: "" };
+			return { buffer: "", contentType: "" };
 		}, url);
-		return { buffer: Buffer.from(obj.buffer, "base64"), fileType: obj.fileType };
+		return { buffer: Buffer.from(obj.buffer, "base64"), fileType: mime.extension(obj.contentType) };
 	}
 };
 
