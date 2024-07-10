@@ -24,27 +24,28 @@ import log from "../utils/log.js";
 import { Assignment, Course, Output, Semester } from "../utils/types.js";
 import fs from "fs-extra";
 import path from "node:path";
-import fetch from "node-fetch";
 import { Page } from "puppeteer";
+import mime from "mime-types";
 
 const logger = log.logger.bind(null, Context.Directory);
 
 let basePath: string;
 const internal = {
 	async getBlobFromUrl(vtop: Page, url: string) {
-		const base64String = await vtop.evaluate(async (url: string) => {
+		const obj = await vtop.evaluate(async (url: string) => {
 			const response = await fetch(url).catch((reason) => console.log("Error fetching blob from url", reason));
 			if (response) {
+				const fileType = mime.extension(response.headers.get("content-type") ?? "application/pdf");
 				const blob = await response.blob();
 				const arrayBuffer = await blob.arrayBuffer();
 				const uint8Array = new Uint8Array(arrayBuffer);
-				return btoa(uint8Array.reduce((data, byte) => data + String.fromCharCode(byte), ""));
+				return { buffer: btoa(uint8Array.reduce((data, byte) => data + String.fromCharCode(byte), "")), fileType: fileType };
 			} else {
 				await new Promise((resolve) => setTimeout(resolve, 30000));
 			}
-			return "";
+			return { buffer: "", fileType: "" };
 		}, url);
-		return Buffer.from(base64String, "base64");
+		return { buffer: Buffer.from(obj.buffer, "base64"), fileType: obj.fileType };
 	}
 };
 
@@ -88,11 +89,11 @@ export default {
 		async download(vtop: Page, semester: Semester, course: Course, assignment: Assignment) {
 			await vtop.waitForNetworkIdle();
 			if (assignment.questionPaper) {
-				const buffer = await internal.getBlobFromUrl(vtop, assignment.questionPaper);
-				if (buffer.length > 0) {
-					const file = path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle, `${assignment.serialNumber} - Question - ${assignment.title}` + ".pdf");
+				const obj = await internal.getBlobFromUrl(vtop, assignment.questionPaper);
+				if (obj.buffer.length > 0) {
+					const file = path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle, `${assignment.serialNumber} - Question - ${assignment.title}` + "." + obj.fileType);
 					assignment.questionPaper = file;
-					await fs.writeFile(file, buffer);
+					await fs.writeFile(file, obj.buffer);
 					logger(`Wrote question paper: ${assignment.serialNumber} - ${assignment.title}!`);
 				} else {
 					assignment.questionPaper = undefined;
@@ -101,11 +102,11 @@ export default {
 			}
 			await vtop.waitForNetworkIdle();
 			if (assignment.solutionPaper) {
-				const buffer = await internal.getBlobFromUrl(vtop, assignment.solutionPaper);
-				if (buffer.length > 0) {
-					const file = path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle, `${assignment.serialNumber} - Solution - ${assignment.title}` + ".pdf");
+				const obj = await internal.getBlobFromUrl(vtop, assignment.solutionPaper);
+				if (obj.buffer.length > 0) {
+					const file = path.join(basePath, "output", semester.name, course.courseCode + " - " + course.courseTitle, `${assignment.serialNumber} - Solution - ${assignment.title}` + "." + obj.fileType);
 					assignment.solutionPaper = file;
-					await fs.writeFile(file, buffer);
+					await fs.writeFile(file, obj.buffer);
 					logger(`Wrote solution paper: ${assignment.serialNumber} - ${assignment.title}!`);
 				} else {
 					assignment.solutionPaper = undefined;
