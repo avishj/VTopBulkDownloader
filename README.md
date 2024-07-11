@@ -15,57 +15,57 @@ Ensure you have the following installed on your computer:
 
 1. **Clone the Repository**
 
-```sh
-cd <desired-project-directory>
-git clone https://github.com/avishj/VTopBulkDownloader.git
-cd VTopBulkDownloader
-```
+    ```sh
+    cd <desired-project-directory>
+    git clone https://github.com/avishj/VTopBulkDownloader.git
+    cd VTopBulkDownloader
+    ```
 
 2. **Install Dependencies**
 
-```sh
-npm install
-```
+    ```sh
+    npm install
+    ```
 
 3. **Configure Environment Variables**
 
-Create a .env file in the root directory of the project with the following contents:
+    Create a .env file in the root directory of the project with the following contents:
 
-```env
-VTOP_USERNAME=<your VTop username>
-VTOP_PASSWORD=<your VTop password>
-```
+    ```env
+    VTOP_USERNAME=<your VTop username>
+    VTOP_PASSWORD=<your VTop password>
+    ```
 
 ### Usage
 
 1. **Compile and Start the Program**
 
-```sh
-npm run start
-```
+    ```sh
+    npm run start
+    ```
 
-This command will compile the TypeScript code and start the program.
+    This command will compile the TypeScript code and start the program.
 
 2. **Login Process**
 
-An automated browser window will open, using the credentials specified in the .env file to log in.
+    An automated browser window will open, using the credentials specified in the .env file to log in.
 
- - If prompted to solve a CAPTCHA, please solve it manually.
-   - You may face either a custom VTop CAPTCHA or a Google reCAPTCHA or none at all.
- - Click the login button to proceed.
+    - If prompted to solve a CAPTCHA, please solve it manually.
+    - You may face either a custom VTop CAPTCHA or a Google reCAPTCHA or none at all.
+    - Click the login button to proceed.
 
 ### Monitoring and Completion
 
 1. **Monitor Progress**
 
-You can monitor the download progress through:
+    You can monitor the download progress through:
 
- - The console output.
- - The log file located at output/<DateTime of Execution>.log.
+    - The console output.
+    - The log file located at output/<DateTime of Execution>.log.
 
 2. **Completion**
 
-The program will automatically exit once it has finished downloading all the data.
+    The program will automatically exit once it has finished downloading all the data.
 
 ## Output
 
