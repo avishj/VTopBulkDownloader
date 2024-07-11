@@ -22,7 +22,7 @@
 import dotenv from "dotenv";
 import setup from "./utils/setup.js";
 import log from "./utils/log.js";
-import output from "./modules/output.js";
+import output from "./modules/Digital Assignment/output.js";
 import directory from "./utils/directory.js";
 
 // Loading the environment variables

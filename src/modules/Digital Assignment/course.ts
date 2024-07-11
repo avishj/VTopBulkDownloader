@@ -20,12 +20,12 @@
  */
 
 import { Page } from "puppeteer";
-import { Assignment, Course, Semester } from "../utils/types.js";
-import { Context } from "../utils/enums.js";
-import log from "../utils/log.js";
-import directory from "../utils/directory.js";
-import assignment from "../modules/assignment.js";
-import helpers from "../utils/helpers.js";
+import { Assignment, Course, Semester } from "../../utils/types.js";
+import { Context } from "../../utils/enums.js";
+import log from "../../utils/log.js";
+import directory from "../../utils/directory.js";
+import assignment from "./assignment.js";
+import helpers from "../../utils/helpers.js";
 
 const logger = log.logger.bind(null, Context.Course);
 
