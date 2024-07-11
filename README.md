@@ -7,9 +7,10 @@ An easy way to download your VTop DA's in bulk. Downloads all your semesters' qu
 ### Prerequisites
 
 Ensure you have the following installed on your computer:
-    - Node.js (v18.x or higher)
-    - npm (v8.x or higher)
-    - git (v2.x or higher)
+
+- Node.js (v18.x or higher)
+- npm (v8.x or higher)
+- git (v2.x or higher)
 
 ### Installation
 
