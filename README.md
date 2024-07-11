@@ -146,5 +146,16 @@ output
     - The timestamp of the program.
     - The context (module) of the program.
     - The message to be logged.
-- Example log:
+- Example logs:
     - `[2024-07-10T19:39:45.717Z] - [Output] - Found 52 semesters!`
+    - `[2024-07-10T19:53:33.706Z] - [Directory] - Wrote question paper: 2 - Optical Fiber Characterization!`
+
+### Notes
+
+- The program will not download any data if the credentials are incorrect.
+- The program will not create any folders for a semester if there are no courses in that semester.
+- The program will create folders for a course even if there are no assignments in that course.
+- The program will download question paper and solution paper only if they are available.
+- The program will download and santize the metadata if it is available.
+- The program will change the downloaded file's metadata to the `assignment.lastUpdatedOn` date.
+- The program will overwrite any existing files if they already exist.
