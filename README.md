@@ -7,9 +7,9 @@ An easy way to download your VTop DA's in bulk. Downloads all your semesters' qu
 ### Prerequisites
 
 Ensure you have the following installed on your computer:
-- Node.js (v18.x or higher)
-- npm (v8.x or higher)
-- git (v2.x or higher)
+    - Node.js (v18.x or higher)
+    - npm (v8.x or higher)
+    - git (v2.x or higher)
 
 ### Installation
 
@@ -48,7 +48,7 @@ Ensure you have the following installed on your computer:
 
 2. **Login Process**
 
-    An automated browser window will open, using the credentials specified in the .env file to log in.
+    An automated browser window will open, using the credentials specified in the `.env` file to log in.
 
     - If prompted to solve a CAPTCHA, please solve it manually.
     - You may face either a custom VTop CAPTCHA or a Google reCAPTCHA or none at all.
@@ -69,34 +69,6 @@ Ensure you have the following installed on your computer:
 
 ## Output
 
-Below is an example of the output folder structure:
-
-```
-output
-├── semester_1
-│   ├── course_1
-│   │   ├── <Index> - Question - <DA Name>.<File Extension>
-│   │   ├── <Index> - Solution - <DA Name>.<File Extension>
-│   │   └── course.json
-│   │   └── ...
-│   ├── course_2
-│   │   ├── <Index> - Question - <DA Name>.<File Extension>
-│   │   ├── <Index> - Solution - <DA Name>.<File Extension>
-│   │   └── course.json
-│   │   └── ...
-│   ├── semester.json
-│   └── ...
-├── semester_2
-│   ├── course_1
-│   │   ├── <Index> - Question - <DA Name>.<File Extension>
-│   │   ├── <Index> - Solution - <DA Name>.<File Extension>
-│   │   └── course.json
-│   │   └── ...
-│   ├── semester.json
-│   └── ...
-├── <DateTime>.log
-└── output.json
-```
 ### Nomenclature
 
 - All the output files are in the `output` folder.
@@ -128,5 +100,42 @@ output
         - `lastUpdatedOn`: The last updated date of the assignment. (eg. 04 Dec 2020 02:03 PM)
         - `solutionPaper`: The path to the solution paper. (eg. output/Fall Semester 2020-21/CHY1002 - Environmental Sciences - TH/2 - Solution - Digital Assignment - II.pdf) 
 - `semester.json`:
-- DateTime.log is the log file of the program.
-- Output.json is the metadata of all the semesters.
+    - `name`: The name of the semester. (eg. Fall Semester 2020-21)
+    - `value`: The value of the semester. (eg. VL20202101)
+    - `courses`: The list of courses in the semester. (eg. refer to `course.json`)
+- `output.json`: 
+    - `timestamp`: The timestamp of the program, also serves as the name of the log file. (eg. 2024-07-10T19:39:27.241Z)
+    - `semesters`: The list of semesters. (eg. refer to `semester.json`)
+
+### Logs
+
+### Folder Structure
+
+Below is an example of the output folder structure:
+
+```
+output
+├── semester_1
+│   ├── course_1
+│   │   ├── <Index> - Question - <DA Name>.<File Extension>
+│   │   ├── <Index> - Solution - <DA Name>.<File Extension>
+│   │   └── course.json
+│   │   └── ...
+│   ├── course_2
+│   │   ├── <Index> - Question - <DA Name>.<File Extension>
+│   │   ├── <Index> - Solution - <DA Name>.<File Extension>
+│   │   └── course.json
+│   │   └── ...
+│   ├── semester.json
+│   └── ...
+├── semester_2
+│   ├── course_1
+│   │   ├── <Index> - Question - <DA Name>.<File Extension>
+│   │   ├── <Index> - Solution - <DA Name>.<File Extension>
+│   │   └── course.json
+│   │   └── ...
+│   ├── semester.json
+│   └── ...
+├── <DateTime>.log
+└── output.json
+```
