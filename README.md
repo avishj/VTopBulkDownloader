@@ -61,7 +61,7 @@ Ensure you have the following installed on your computer:
     You can monitor the download progress through:
 
     - The console output.
-    - The log file located at output/<DateTime of Execution>.log.
+    - The log file located at output/`<DateTime of Execution>.log`.
 
 2. **Completion**
 
