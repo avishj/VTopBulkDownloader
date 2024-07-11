@@ -153,9 +153,11 @@ output
 ### Notes
 
 - The program will not download any data if the credentials are incorrect.
-- The program will not create any folders for a semester if there are no courses in that semester.
-- The program will create folders for a course even if there are no assignments in that course.
-- The program will download question paper and solution paper only if they are available.
+- The program cannot bypass the CAPTCHA automatically.
+- The program will not create a folder for a semester if there are no courses in that semester.
+- The program will create a folder for a course even if there are no assignments in that course.
+- The program will download the question paper and the solution paper only if they are available.
 - The program will download and santize the metadata if it is available.
-- The program will change the downloaded file's metadata to the `assignment.lastUpdatedOn` date.
-- The program will overwrite any existing files if they already exist.
+- The program will change the downloaded file's metadata to the `assignment.lastUpdatedOn` date, and if that fails it will use the current date and time.
+- The program may overwrite any existing files even if they already exist.
+- The program will not delete any files if they are already present in the output folder.
