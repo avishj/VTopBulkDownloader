@@ -69,6 +69,37 @@ Ensure you have the following installed on your computer:
 
 ## Output
 
+### Folder Structure
+
+A sample output folder structure is shown below:
+
+```
+output
+├── semester_1
+│   ├── course_1
+│   │   ├── <Index> - Question - <DA Name>.<File Extension>
+│   │   ├── <Index> - Solution - <DA Name>.<File Extension>
+│   │   ├── course.json
+│   │   └── ...
+│   ├── course_2
+│   │   ├── <Index> - Question - <DA Name>.<File Extension>
+│   │   ├── <Index> - Solution - <DA Name>.<File Extension>
+│   │   ├── course.json
+│   │   └── ...
+│   ├── semester.json
+│   └── ...
+├── semester_2
+│   ├── course_1
+│   │   ├── <Index> - Question - <DA Name>.<File Extension>
+│   │   ├── <Index> - Solution - <DA Name>.<File Extension>
+│   │   ├── course.json
+│   │   └── ...
+│   ├── semester.json
+│   └── ...
+├── <DateTime of Execution>.log
+└── output.json
+```
+
 ### Nomenclature
 
 - All the output files are in the `output` folder.
@@ -107,35 +138,12 @@ Ensure you have the following installed on your computer:
     - `timestamp`: The timestamp of the program, also serves as the name of the log file. (eg. 2024-07-10T19:39:27.241Z)
     - `semesters`: The list of semesters. (eg. refer to `semester.json`)
 
-### Logs
+### Log
 
-### Folder Structure
-
-Below is an example of the output folder structure:
-
-```
-output
-├── semester_1
-│   ├── course_1
-│   │   ├── <Index> - Question - <DA Name>.<File Extension>
-│   │   ├── <Index> - Solution - <DA Name>.<File Extension>
-│   │   └── course.json
-│   │   └── ...
-│   ├── course_2
-│   │   ├── <Index> - Question - <DA Name>.<File Extension>
-│   │   ├── <Index> - Solution - <DA Name>.<File Extension>
-│   │   └── course.json
-│   │   └── ...
-│   ├── semester.json
-│   └── ...
-├── semester_2
-│   ├── course_1
-│   │   ├── <Index> - Question - <DA Name>.<File Extension>
-│   │   ├── <Index> - Solution - <DA Name>.<File Extension>
-│   │   └── course.json
-│   │   └── ...
-│   ├── semester.json
-│   └── ...
-├── <DateTime>.log
-└── output.json
-```
+- The log file is located at `output/<DateTime of Execution>.log`.
+- Each log file contains the following information:
+    - The timestamp of the program.
+    - The context (module) of the program.
+    - The message to be logged.
+- Example log:
+    - `[2024-07-10T19:39:45.717Z] - [Output] - Found 52 semesters!`
